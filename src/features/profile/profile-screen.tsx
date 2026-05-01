@@ -18,6 +18,14 @@ export function ProfileScreen() {
   const [offline, setOffline] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  const hydrate = (nextUser: User) => {
+    updateLocalUser(nextUser);
+    setName(nextUser.name);
+    setEmail(nextUser.email ?? "");
+    setPhone(nextUser.phone ?? "");
+    setAvatarUrl(nextUser.avatar_url ?? "builtin://blue_star");
+  };
+
   useEffect(() => {
     if (!user || isGuest) return;
     let active = true;
@@ -35,16 +43,7 @@ export function ProfileScreen() {
     return () => {
       active = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGuest, user?.id]);
-
-  const hydrate = (nextUser: User) => {
-    updateLocalUser(nextUser);
-    setName(nextUser.name);
-    setEmail(nextUser.email ?? "");
-    setPhone(nextUser.phone ?? "");
-    setAvatarUrl(nextUser.avatar_url ?? "builtin://blue_star");
-  };
 
   const avatarSrc = useMemo(() => {
     if (avatarUrl === "builtin://pink_star") return "/assets/star4.svg";

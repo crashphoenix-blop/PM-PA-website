@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { apiClient } from "@/shared/api/client";
 import type { User } from "@/shared/api/types";
 import { sessionStorageService } from "@/shared/lib/storage";
@@ -124,21 +124,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     persistUser(fresh, false);
   };
 
-  const value = useMemo<AuthContextValue>(
-    () => ({
-      user,
-      isGuest,
-      isAuthenticated,
-      isReady,
-      login,
-      register,
-      startGuest,
-      logout,
-      refreshProfile,
-      updateLocalUser: (nextUser) => persistUser(nextUser, Boolean(nextUser.is_guest))
-    }),
-    [isAuthenticated, isGuest, isReady, user]
-  );
+  const value: AuthContextValue = {
+    user,
+    isGuest,
+    isAuthenticated,
+    isReady,
+    login,
+    register,
+    startGuest,
+    logout,
+    refreshProfile,
+    updateLocalUser: (nextUser) => persistUser(nextUser, Boolean(nextUser.is_guest))
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
