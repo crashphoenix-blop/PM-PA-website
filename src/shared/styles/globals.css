@@ -1,0 +1,231 @@
+:root {
+  --app-primary: #524141;
+  --app-background: #e7e1db;
+  --app-secondary: #a68e8e;
+  --app-fav-active: #d18bff;
+  --app-white: #ffffff;
+  --app-text-main: #000000;
+  --app-text-secondary: #e7e1db;
+  --app-image-blue: #7ebfff;
+  --radius-card: 42px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--app-background);
+  color: var(--app-text-main);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.page {
+  min-height: 100dvh;
+  padding: 20px 16px 24px;
+  background: var(--app-background);
+}
+
+.content-width {
+  width: min(100%, 980px);
+  margin: 0 auto;
+}
+
+.miama {
+  font-family: "Times New Roman", "Snell Roundhand", cursive;
+}
+
+.primary-button {
+  border: 0;
+  border-radius: 27.5px;
+  min-height: 55px;
+  padding: 0 32px;
+  font-size: 21px;
+  background: var(--app-secondary);
+  color: var(--app-text-secondary);
+  cursor: pointer;
+}
+
+.secondary-button {
+  border: 0;
+  border-radius: 20px;
+  min-height: 40px;
+  padding: 0 24px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--app-secondary);
+  color: var(--app-text-secondary);
+  cursor: pointer;
+}
+
+.round-button {
+  width: 55px;
+  height: 55px;
+  border-radius: 27.5px;
+  border: 0;
+  background: var(--app-secondary);
+  color: var(--app-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 8px;
+  font-style: italic;
+  font-size: 20px;
+}
+
+.field-input {
+  width: 100%;
+  min-height: 43px;
+  border-radius: 21.5px;
+  border: 0;
+  outline: none;
+  padding: 0 24px;
+  background: rgba(166, 142, 142, 0.33);
+}
+
+.search-input {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  padding: 0 14px;
+  color: var(--app-primary);
+  background: var(--app-white);
+}
+
+.tabbar-shell {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  z-index: 20;
+}
+
+.tabbar-button {
+  width: 110px;
+  height: 59px;
+  border-radius: 29.5px;
+  border: 0;
+  background: var(--app-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.tabbar-button img {
+  width: 27px;
+  height: 27px;
+  opacity: 0.85;
+}
+
+.gift-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding-bottom: 120px;
+}
+
+.gift-card {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--app-white);
+  position: relative;
+  aspect-ratio: 4 / 5;
+}
+
+.gift-card img.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gift-meta {
+  position: absolute;
+  inset-inline: 16px;
+  bottom: 10px;
+}
+
+.gift-meta-title {
+  font-size: 13px;
+  margin: 0;
+}
+
+.gift-meta-price {
+  font-size: 21px;
+  margin: 0 0 2px;
+}
+
+.fav-icon-button {
+  position: absolute;
+  right: 21px;
+  bottom: 30px;
+  border: 0;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.category-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 6px 0 0;
+  scrollbar-width: none;
+}
+
+.category-row::-webkit-scrollbar {
+  display: none;
+}
+
+.category-chip {
+  min-height: 38px;
+  border-radius: 19px;
+  border: 0;
+  padding: 0 20px;
+  font-size: 21px;
+  color: var(--app-text-secondary);
+  background: var(--app-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.page-title {
+  font-size: 32px;
+  margin: 0;
+  color: var(--app-primary);
+}
+
+@media (min-width: 900px) {
+  .page {
+    padding-inline: 24px;
+  }
+
+  .gift-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
