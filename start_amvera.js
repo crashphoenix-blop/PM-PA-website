@@ -1,4 +1,6 @@
 const { spawnSync } = require("node:child_process");
+const fs = require("node:fs");
+const path = require("node:path");
 
 function run(command, args) {
   const result = spawnSync(command, args, { stdio: "inherit" });
@@ -7,11 +9,13 @@ function run(command, args) {
   }
 }
 
-if (process.env.SKIP_NPM_INSTALL !== "1") {
-  run("npm", ["ci"]);
+const nextBin = path.join(process.cwd(), "node_modules", "next", "dist", "bin", "next");
+if (!fs.existsSync(nextBin)) {
+  console.error("next binary not found in node_modules. Ensure dependencies are installed during build stage.");
+  process.exit(1);
 }
 
-run("npm", ["run", "build"]);
+run("node", [nextBin, "build"]);
 
 const port = process.env.PORT || "3000";
-run("npm", ["run", "start", "--", "--hostname", "0.0.0.0", "--port", port]);
+run("node", [nextBin, "start", "--hostname", "0.0.0.0", "--port", port]);
