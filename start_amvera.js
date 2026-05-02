@@ -11,11 +11,20 @@ function run(command, args) {
 
 const nextBin = path.join(process.cwd(), "node_modules", "next", "dist", "bin", "next");
 if (!fs.existsSync(nextBin)) {
-  console.error("next binary not found in node_modules. Ensure dependencies are installed during build stage.");
+  process.env.npm_config_cache = process.env.npm_config_cache || "/tmp/.npm";
+  run("npm", ["ci"]);
+}
+
+const resolvedNextBin = path.join(process.cwd(), "node_modules", "next", "dist", "bin", "next");
+if (!fs.existsSync(resolvedNextBin)) {
+  console.error("next binary is still missing after npm ci.");
   process.exit(1);
 }
 
-run("node", [nextBin, "build"]);
+const buildIdPath = path.join(process.cwd(), ".next", "BUILD_ID");
+if (!fs.existsSync(buildIdPath)) {
+  run("node", [resolvedNextBin, "build"]);
+}
 
 const port = process.env.PORT || "3000";
-run("node", [nextBin, "start", "--hostname", "0.0.0.0", "--port", port]);
+run("node", [resolvedNextBin, "start", "--hostname", "0.0.0.0", "--port", port]);

@@ -30,6 +30,7 @@
 
 - `amvera.yaml`
 - `start_amvera.js`
+- `.amveraignore`
 
 После подключения репозитория в Amvera вручную нужно указать только одно значение:
 
