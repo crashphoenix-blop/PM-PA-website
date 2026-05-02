@@ -20,7 +20,7 @@ export function RequireAuthRoutes({ children }: { children: React.ReactNode }) {
     }
   }, [isAuthenticated, isGuest, isReady, router]);
 
-  if (!isReady) return <main className="page">Загрузка...</main>;
+  if (!isReady) return <>{children}</>;
   if (isAuthenticated || isGuest) return null;
   return <>{children}</>;
 }

@@ -1,0 +1,13 @@
+meta:
+  environment: nodejs
+  toolchain:
+    name: npm
+    version: "20"
+
+build:
+  useCache: true
+
+run:
+  scriptName: start_amvera.sh
+  persistenceMount: /data
+  containerPort: 3000

@@ -187,5 +187,21 @@ export const apiClient = {
       path: `/favorites/${id}/toggle`,
       method: "POST"
     });
+  },
+  createGift(payload: {
+    name: string;
+    description?: string;
+    price: number;
+    image_url: string;
+    store_name?: string;
+    store_url?: string;
+    category_ids?: number[];
+    category_names?: string[];
+  }) {
+    return request<Gift>({
+      path: "/gifts",
+      method: "POST",
+      body: payload
+    });
   }
 };

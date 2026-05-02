@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/features/auth/auth-context";
 import { apiClient } from "@/shared/api/client";
@@ -122,6 +123,11 @@ export function ProfileScreen() {
           >
             инфо для клиента
           </button>
+          {user?.is_admin ? (
+            <Link href="/admin/gifts/new" className="primary-button" style={{ width: 300, lineHeight: "56px" }}>
+              добавить подарок
+            </Link>
+          ) : null}
         </div>
 
         {editing ? (

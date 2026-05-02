@@ -1,5 +1,5 @@
-import { AppBootstrap } from "@/shared/components/app-bootstrap";
+import { redirect } from "next/navigation";
 
 export default function HomePage() {
-  return <AppBootstrap />;
+  redirect("/welcome");
 }

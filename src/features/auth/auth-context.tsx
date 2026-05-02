@@ -25,6 +25,7 @@ const parsePersistedUser = (): User | null => {
   if (!persisted) return null;
   return {
     ...persisted,
+    is_admin: Boolean(persisted.is_admin),
     is_guest: sessionStorageService.isGuest(),
     created_at: null
   };
@@ -46,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         phone: null,
         avatar_url: null,
         is_guest: true,
+        is_admin: false,
         created_at: null
       });
     }
@@ -63,7 +65,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         name: nextUser.name,
         email: nextUser.email,
         phone: nextUser.phone,
-        avatar_url: nextUser.avatar_url
+        avatar_url: nextUser.avatar_url,
+        is_admin: nextUser.is_admin
       });
     } else {
       sessionStorageService.setUser(null);
@@ -107,6 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         phone: null,
         avatar_url: null,
         is_guest: true,
+        is_admin: false,
         created_at: null
       },
       true

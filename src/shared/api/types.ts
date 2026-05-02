@@ -17,6 +17,7 @@ export type User = {
   email: string | null;
   phone: string | null;
   is_guest: boolean;
+  is_admin: boolean;
   created_at: string | null;
   avatar_url: string | null;
 };

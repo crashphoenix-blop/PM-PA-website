@@ -13,6 +13,7 @@ type PersistedUser = {
   email: string | null;
   phone: string | null;
   avatar_url: string | null;
+  is_admin: boolean;
 };
 
 const canUseStorage = (): boolean => typeof window !== "undefined";
