@@ -24,18 +24,21 @@
 
 - `NEXT_PUBLIC_API_BASE_URL` — URL backend API (по умолчанию `http://127.0.0.1:8000`).
 
-## Деплой на Amvera (frontend)
+## Деплой на Vercel (рекомендуется)
 
-В репозитории уже есть готовые файлы:
+1. Подключите репозиторий `PM-PA-website` к Vercel.
+2. В `Project Settings -> Environment Variables` добавьте:
+   - `NEXT_PUBLIC_API_BASE_URL=https://upipa-back-crashphoenix.amvera.io`
+3. Нажмите `Deploy` (или `Redeploy` после добавления переменной).
 
-- `amvera.yaml`
-- `.amveraignore`
+Vercel автоматически определит Next.js-проект, поэтому отдельные команды задавать не нужно.
 
-После подключения репозитория в Amvera вручную нужно указать только одно значение:
+## Деплой на Amvera (опционально)
 
+Если нужен деплой фронта в Amvera, используйте `amvera.yaml` из репозитория.
+
+Минимально требуется переменная:
 - `NEXT_PUBLIC_API_BASE_URL=https://<URL backend-сервиса>`
-
-Остальное берётся из файлов автоматически.
 
 ## Основные маршруты
 
