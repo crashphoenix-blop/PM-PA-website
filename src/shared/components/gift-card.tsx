@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import type { Gift } from "@/shared/api/types";
 
 type GiftCardProps = {
@@ -10,6 +11,13 @@ type GiftCardProps = {
 };
 
 export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
+  const fallbackSrc = "/assets/star.svg";
+  const [imageSrc, setImageSrc] = useState(gift.image_url || fallbackSrc);
+
+  useEffect(() => {
+    setImageSrc(gift.image_url || fallbackSrc);
+  }, [gift.image_url]);
+
   return (
     <article className="gift-card">
       <button
@@ -18,12 +26,15 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
         onClick={onOpen}
       >
         <Image
-          src={gift.image_url || "/assets/star.svg"}
+          src={imageSrc}
           alt={gift.name}
           width={500}
           height={600}
           className="cover"
           unoptimized
+          onError={() => {
+            if (imageSrc !== fallbackSrc) setImageSrc(fallbackSrc);
+          }}
         />
       </button>
 

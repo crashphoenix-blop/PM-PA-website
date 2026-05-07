@@ -168,7 +168,8 @@ export const apiClient = {
   getAllGifts(page = 1, perPage = 500) {
     return request<GiftListResponse>({
       path: "/gifts",
-      params: { page, per_page: perPage }
+      params: { page, per_page: perPage },
+      withAuth: false
     });
   },
   getGiftsByCategory(categoryId: number, page = 1, perPage = 200) {

@@ -10,7 +10,9 @@ import { trackEvent } from "@/shared/analytics/tracker";
 
 export function GiftDetailScreen({ giftId }: { giftId: number }) {
   const router = useRouter();
+  const fallbackSrc = "/assets/star.svg";
   const [gift, setGift] = useState<Gift | null>(null);
+  const [imageSrc, setImageSrc] = useState(fallbackSrc);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -21,7 +23,10 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
       try {
         setLoading(true);
         const details = await apiClient.getGiftDetails(giftId);
-        if (active) setGift(details);
+        if (active) {
+          setGift(details);
+          setImageSrc(details.image_url || fallbackSrc);
+        }
       } catch (loadError) {
         if (active) setError(loadError instanceof Error ? loadError.message : "Не удалось загрузить подарок");
       } finally {
@@ -79,7 +84,16 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
             position: "relative"
           }}
         >
-          <Image src={gift.image_url || "/assets/star.svg"} alt={gift.name} fill className="cover" unoptimized />
+          <Image
+            src={imageSrc}
+            alt={gift.name}
+            fill
+            className="cover"
+            unoptimized
+            onError={() => {
+              if (imageSrc !== fallbackSrc) setImageSrc(fallbackSrc);
+            }}
+          />
         </div>
 
         <section style={{ padding: "20px 20px 0" }}>

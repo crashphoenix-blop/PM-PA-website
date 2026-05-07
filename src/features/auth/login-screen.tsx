@@ -10,6 +10,7 @@ export function LoginScreen() {
   const { login } = useAuth();
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -59,11 +60,21 @@ export function LoginScreen() {
           </label>
           <input
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             className="field-input"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 6 }}>
+            <button
+              type="button"
+              style={{ border: 0, background: "transparent", color: "var(--app-primary)", cursor: "pointer" }}
+              aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"}
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? "скрыть пароль" : "показать пароль"}
+            </button>
+          </div>
 
           {error ? <p style={{ color: "crimson", marginTop: 12 }}>{error}</p> : null}
 

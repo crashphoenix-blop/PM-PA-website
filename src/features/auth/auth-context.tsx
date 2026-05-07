@@ -31,6 +31,18 @@ const parsePersistedUser = (): User | null => {
   };
 };
 
+const normalizeIdentityInput = (raw: string): string => {
+  const value = raw.trim();
+  if (value.includes("@")) return value.toLowerCase();
+
+  const digits = value.replace(/\D/g, "");
+  if (digits.length === 10) return `+7${digits}`;
+  if (digits.length === 11 && (digits.startsWith("7") || digits.startsWith("8"))) {
+    return `+7${digits.slice(1)}`;
+  }
+  return value;
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isReady, setIsReady] = useState(false);
@@ -75,7 +87,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const login = async (emailOrPhone: string, password: string) => {
-    const response = await apiClient.login({ email_or_phone: emailOrPhone, password });
+    const response = await apiClient.login({
+      email_or_phone: normalizeIdentityInput(emailOrPhone),
+      password
+    });
     sessionStorageService.setToken(response.token);
     sessionStorageService.setRefreshToken(response.refresh_token);
     persistUser(response.user, false);
@@ -90,9 +105,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     emailOrPhone: string;
     password: string;
   }) => {
-    const payload = emailOrPhone.includes("@")
-      ? { name, email: emailOrPhone, password }
-      : { name, phone: emailOrPhone, password };
+    const normalizedIdentity = normalizeIdentityInput(emailOrPhone);
+    const payload = normalizedIdentity.includes("@")
+      ? { name, email: normalizedIdentity, password }
+      : { name, phone: normalizedIdentity, password };
     const response = await apiClient.register(payload);
     sessionStorageService.setToken(response.token);
     sessionStorageService.setRefreshToken(response.refresh_token);

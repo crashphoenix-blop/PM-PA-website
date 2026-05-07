@@ -116,8 +116,8 @@ export function ProfileScreen() {
             {isGuest ? "зарегистрироваться" : "настройки профиля"}
           </button>
           {isGuest ? (
-            <button className="primary-button" style={{ width: 300 }} onClick={() => router.push("/register")}>
-              перейти к регистрации
+            <button className="primary-button" style={{ width: 300 }} onClick={() => router.push("/login")}>
+              войти
             </button>
           ) : null}
           <button

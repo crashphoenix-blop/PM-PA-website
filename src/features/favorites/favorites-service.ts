@@ -47,7 +47,14 @@ export const toggleFavorite = async (
 
 export const fetchFavoriteGifts = async (): Promise<Gift[]> => {
   const token = sessionStorageService.getToken();
-  if (!token) return [];
+  if (!token) {
+    const favoriteIds = sessionStorageService.getFavoriteIds();
+    if (favoriteIds.size === 0) return [];
+    const all = await apiClient.getAllGifts();
+    return all.gifts
+      .filter((item) => favoriteIds.has(item.id))
+      .map((item) => ({ ...item, is_favorite: true }));
+  }
   try {
     return await apiClient.getFavorites();
   } catch (error) {
