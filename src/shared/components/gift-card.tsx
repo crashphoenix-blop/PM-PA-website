@@ -32,6 +32,7 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
           height={600}
           className="cover"
           unoptimized
+          referrerPolicy="no-referrer"
           onError={() => {
             if (imageSrc !== fallbackSrc) setImageSrc(fallbackSrc);
           }}
@@ -52,7 +53,11 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
           alt=""
           width={32}
           height={32}
-          style={{ filter: gift.is_favorite ? "hue-rotate(250deg) saturate(180%)" : "none" }}
+          style={{
+            filter: gift.is_favorite
+              ? "hue-rotate(265deg) saturate(650%) brightness(1.18) contrast(1.15) drop-shadow(0 0 3px rgba(255,150,255,0.9))"
+              : "grayscale(0.08) opacity(0.85)"
+          }}
         />
       </button>
       <div className="gift-meta">

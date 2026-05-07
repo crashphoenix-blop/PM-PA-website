@@ -90,6 +90,7 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
             fill
             className="cover"
             unoptimized
+            referrerPolicy="no-referrer"
             onError={() => {
               if (imageSrc !== fallbackSrc) setImageSrc(fallbackSrc);
             }}
@@ -139,7 +140,7 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
               height={32}
               style={{
                 filter: gift.is_favorite
-                  ? "hue-rotate(250deg) saturate(180%)"
+                  ? "hue-rotate(265deg) saturate(650%) brightness(1.18) contrast(1.15) drop-shadow(0 0 3px rgba(255,150,255,0.9))"
                   : "grayscale(0.1) opacity(0.75)"
               }}
             />
