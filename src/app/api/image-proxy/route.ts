@@ -16,10 +16,31 @@ const inferContentType = (url: string): string => {
   return EXTENSION_TO_CONTENT_TYPE[ext] ?? "image/jpeg";
 };
 
+const buildPlaceholderSvg = (title: string): string => {
+  const safeTitle = title.replace(/[<>&"]/g, "").slice(0, 48) || "Подарок";
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" fill="none">
+  <rect width="1200" height="1200" fill="#E7E1DB"/>
+  <circle cx="600" cy="420" r="180" fill="#A68E8E" fill-opacity="0.35"/>
+  <text x="600" y="740" text-anchor="middle" fill="#524141" font-family="Helvetica, Arial, sans-serif" font-size="56" font-weight="700">${safeTitle}</text>
+  <text x="600" y="810" text-anchor="middle" fill="#524141" font-family="Helvetica, Arial, sans-serif" font-size="36" fill-opacity="0.75">изображение временно недоступно</text>
+</svg>`;
+};
+
+const placeholderResponse = (title: string): NextResponse =>
+  new NextResponse(buildPlaceholderSvg(title), {
+    status: 200,
+    headers: {
+      "Content-Type": "image/svg+xml; charset=utf-8",
+      "Cache-Control": "public, max-age=300"
+    }
+  });
+
 export async function GET(request: NextRequest) {
   const source = request.nextUrl.searchParams.get("url")?.trim();
+  const title = request.nextUrl.searchParams.get("title")?.trim() ?? "Подарок";
   if (!source || (!source.startsWith("http://") && !source.startsWith("https://"))) {
-    return new NextResponse("Invalid url", { status: 400 });
+    return placeholderResponse(title);
   }
 
   let upstream: Response;
@@ -35,11 +56,11 @@ export async function GET(request: NextRequest) {
       next: { revalidate: 86400 }
     });
   } catch {
-    return new NextResponse("Failed to fetch image", { status: 502 });
+    return placeholderResponse(title);
   }
 
   if (!upstream.ok) {
-    return new NextResponse("Image unavailable", { status: 404 });
+    return placeholderResponse(title);
   }
 
   const rawContentType = upstream.headers.get("content-type") ?? "";

@@ -11,13 +11,6 @@ import { trackEvent } from "@/shared/analytics/tracker";
 export function GiftDetailScreen({ giftId }: { giftId: number }) {
   const router = useRouter();
   const fallbackSrc = "/assets/star.svg";
-  const toImageSrc = (raw?: string | null): string => {
-    if (!raw) return fallbackSrc;
-    if (raw.startsWith("http://") || raw.startsWith("https://")) {
-      return `/api/image-proxy?url=${encodeURIComponent(raw)}`;
-    }
-    return raw;
-  };
   const [gift, setGift] = useState<Gift | null>(null);
   const [imageSrc, setImageSrc] = useState(fallbackSrc);
   const [loading, setLoading] = useState(true);
@@ -32,7 +25,15 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
         const details = await apiClient.getGiftDetails(giftId);
         if (active) {
           setGift(details);
-          setImageSrc(toImageSrc(details.image_url));
+          if (!details.image_url) {
+            setImageSrc(fallbackSrc);
+          } else if (details.image_url.startsWith("http://") || details.image_url.startsWith("https://")) {
+            setImageSrc(
+              `/api/image-proxy?url=${encodeURIComponent(details.image_url)}&title=${encodeURIComponent(details.name)}`
+            );
+          } else {
+            setImageSrc(details.image_url);
+          }
         }
       } catch (loadError) {
         if (active) setError(loadError instanceof Error ? loadError.message : "Не удалось загрузить подарок");
