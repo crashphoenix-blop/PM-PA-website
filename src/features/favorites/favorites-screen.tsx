@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { Gift } from "@/shared/api/types";
 import { GiftCard } from "@/shared/components/gift-card";
 import { fetchFavoriteGifts, toggleFavorite } from "@/features/favorites/favorites-service";
+import { trackEvent } from "@/shared/analytics/tracker";
 
 export function FavoritesScreen() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export function FavoritesScreen() {
 
   const onToggle = async (giftId: number) => {
     try {
-      const nextState = await toggleFavorite(giftId);
+      const nextState = await toggleFavorite(giftId, { surface: "favorites" });
       setItems((prev) =>
         prev
           .map((gift) => (gift.id === giftId ? { ...gift, is_favorite: nextState } : gift))
@@ -67,6 +68,7 @@ export function FavoritesScreen() {
                 className="primary-button"
                 style={{ width: "100%", marginTop: 8, minHeight: 45, borderRadius: 22.5 }}
                 onClick={() => {
+                  void trackEvent("purchase_click", { gift_id: gift.id, surface: "favorites" });
                   if (gift.store_url) window.open(gift.store_url, "_blank", "noopener,noreferrer");
                 }}
               >

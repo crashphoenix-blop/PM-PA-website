@@ -71,3 +71,17 @@ export type ProfileUpdatePayload = {
   phone?: string;
   avatar_url?: string;
 };
+
+export type AnalyticsEventPayload = {
+  event_name: string;
+  event_time?: string;
+  anonymous_id?: string;
+  session_id?: string;
+  user_id?: number;
+  gift_id?: number;
+  surface?: string;
+  action?: string;
+  path?: string;
+  duration_seconds?: number;
+  payload?: Record<string, unknown>;
+};

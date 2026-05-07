@@ -14,6 +14,8 @@ type FeedState = {
   categories: Category[];
 };
 
+const HIDDEN_CATEGORY_NAMES = new Set(["14 февраля", "23 февраля"]);
+
 export function FeedScreen() {
   const router = useRouter();
   const { user } = useAuth();
@@ -23,7 +25,32 @@ export function FeedScreen() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const categoryTitles = useMemo(() => ["все", ...state.categories.map((item) => item.name)], [state.categories]);
+  const applyFilters = (
+    allGifts: Gift[],
+    categories: Category[],
+    selectedCategoryIndex: number,
+    query: string
+  ): Gift[] => {
+    const normalizedQuery = query.trim().toLowerCase();
+    const visibleCategories = categories.filter((item) => !HIDDEN_CATEGORY_NAMES.has(item.name.trim().toLowerCase()));
+    const category = selectedCategoryIndex > 0 ? visibleCategories[selectedCategoryIndex - 1] : null;
+
+    return allGifts.filter((gift) => {
+      const categoryMatched = !category || gift.categories.some((entry) => entry.id === category.id);
+      if (!categoryMatched) return false;
+
+      if (!normalizedQuery) return true;
+      const title = gift.name.toLowerCase();
+      const description = (gift.description ?? "").toLowerCase();
+      return title.includes(normalizedQuery) || description.includes(normalizedQuery);
+    });
+  };
+
+  const visibleCategories = useMemo(
+    () => state.categories.filter((item) => !HIDDEN_CATEGORY_NAMES.has(item.name.trim().toLowerCase())),
+    [state.categories]
+  );
+  const categoryTitles = useMemo(() => ["все", ...visibleCategories.map((item) => item.name)], [visibleCategories]);
 
   useEffect(() => {
     let active = true;
@@ -31,14 +58,16 @@ export function FeedScreen() {
       try {
         setLoading(true);
         await syncFavoritesFromServer();
-        const [categories, recommended] = await Promise.all([
+        const [categories, recommended, all] = await Promise.all([
           apiClient.getCategories(),
-          apiClient.getRecommendedGifts()
+          apiClient.getRecommendedGifts(),
+          apiClient.getAllGifts()
         ]);
+        const allGifts = all.gifts.length > 0 ? all.gifts : recommended.gifts;
         if (!active) return;
         setState({
-          gifts: recommended.gifts,
-          allGifts: recommended.gifts,
+          gifts: allGifts,
+          allGifts,
           categories
         });
       } catch (loadError) {
@@ -53,53 +82,27 @@ export function FeedScreen() {
     };
   }, []);
 
-  const onSelectCategory = async (index: number) => {
+  const onSelectCategory = (index: number) => {
+    const nextQuery = searchQuery;
     setSelectedCategory(index);
-    setSearchQuery("");
     setError(null);
-
-    if (index === 0) {
-      setState((prev) => ({ ...prev, gifts: prev.allGifts }));
-      return;
-    }
-
-    const category = state.categories[index - 1];
-    if (!category) return;
-    try {
-      const filtered = await apiClient.getGiftsByCategory(category.id);
-      setState((prev) => ({ ...prev, gifts: filtered.gifts }));
-    } catch {
-      setState((prev) => ({
-        ...prev,
-        gifts: prev.allGifts.filter((gift) => gift.categories.some((entry) => entry.id === category.id))
-      }));
-    }
+    setState((prev) => ({
+      ...prev,
+      gifts: applyFilters(prev.allGifts, prev.categories, index, nextQuery)
+    }));
   };
 
-  const onSearch = async (query: string) => {
+  const onSearch = (query: string) => {
     setSearchQuery(query);
-    if (!query) {
-      onSelectCategory(selectedCategory);
-      return;
-    }
-    try {
-      const results = await apiClient.searchGifts(query);
-      setState((prev) => ({ ...prev, gifts: results.gifts }));
-    } catch {
-      setState((prev) => ({
-        ...prev,
-        gifts: prev.allGifts.filter(
-          (gift) =>
-            gift.name.toLowerCase().includes(query.toLowerCase()) ||
-            (gift.description ?? "").toLowerCase().includes(query.toLowerCase())
-        )
-      }));
-    }
+    setState((prev) => ({
+      ...prev,
+      gifts: applyFilters(prev.allGifts, prev.categories, selectedCategory, query)
+    }));
   };
 
   const onToggleFavorite = async (giftId: number) => {
     try {
-      const isFavorite = await toggleFavorite(giftId);
+      const isFavorite = await toggleFavorite(giftId, { surface: "feed" });
       setState((prev) => ({
         ...prev,
         gifts: prev.gifts.map((gift) => (gift.id === giftId ? { ...gift, is_favorite: isFavorite } : gift)),

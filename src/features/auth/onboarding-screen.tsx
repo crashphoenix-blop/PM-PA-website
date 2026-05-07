@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { onboardingSteps } from "@/shared/lib/constants";
 import { sessionStorageService } from "@/shared/lib/storage";
+import { trackEvent } from "@/shared/analytics/tracker";
 
 export function OnboardingScreen() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export function OnboardingScreen() {
 
   const finish = () => {
     sessionStorageService.setOnboardingCompleted(true);
+    void trackEvent("onboarding_completed");
     router.push("/feed");
   };
 

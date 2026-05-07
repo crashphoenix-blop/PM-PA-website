@@ -167,6 +167,12 @@ input {
   position: absolute;
   inset-inline: 16px;
   bottom: 10px;
+  z-index: 2;
+  color: var(--app-white);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  padding: 8px 10px;
 }
 
 .gift-meta-title {
@@ -181,13 +187,19 @@ input {
 
 .fav-icon-button {
   position: absolute;
-  right: 21px;
-  bottom: 30px;
+  right: 16px;
+  top: 16px;
   border: 0;
-  background: transparent;
-  width: 32px;
-  height: 32px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .category-row {

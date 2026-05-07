@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { apiClient } from "@/shared/api/client";
 import type { Gift } from "@/shared/api/types";
 import { toggleFavorite } from "@/features/favorites/favorites-service";
+import { trackEvent } from "@/shared/analytics/tracker";
 
 export function GiftDetailScreen({ giftId }: { giftId: number }) {
   const router = useRouter();
@@ -41,7 +42,7 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
   const onToggleFavorite = async () => {
     if (!gift) return;
     try {
-      const isFavorite = await toggleFavorite(gift.id);
+      const isFavorite = await toggleFavorite(gift.id, { surface: "gift_detail" });
       setGift({ ...gift, is_favorite: isFavorite });
     } catch {
       setError("Не удалось обновить избранное");
@@ -74,10 +75,11 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
             borderBottomRightRadius: 42,
             overflow: "hidden",
             aspectRatio: "1 / 1.15",
-            maxHeight: "min(70dvh, 560px)"
+            maxHeight: "min(70dvh, 560px)",
+            position: "relative"
           }}
         >
-          <Image src={gift.image_url || "/assets/star.svg"} alt={gift.name} width={1000} height={1000} unoptimized />
+          <Image src={gift.image_url || "/assets/star.svg"} alt={gift.name} fill className="cover" unoptimized />
         </div>
 
         <section style={{ padding: "20px 20px 0" }}>
@@ -96,7 +98,8 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
             bottom: "calc(30px + 60px)",
             display: "flex",
             alignItems: "center",
-            gap: 8
+            gap: 8,
+            zIndex: 30
           }}
         >
           <button
@@ -104,6 +107,7 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
             className="primary-button"
             style={{ width: 200 }}
             onClick={() => {
+              void trackEvent("purchase_click", { gift_id: gift.id, surface: "gift_detail" });
               if (gift.store_url) window.open(gift.store_url, "_blank", "noopener,noreferrer");
             }}
           >

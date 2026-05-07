@@ -3,13 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/features/auth/auth-context";
 import { apiClient } from "@/shared/api/client";
 import type { User } from "@/shared/api/types";
 import { validateEmail, validateName, validatePhone } from "@/shared/lib/validation";
 
 export function ProfileScreen() {
-  const { user, isGuest, updateLocalUser, startGuest } = useAuth();
+  const router = useRouter();
+  const { user, isGuest, updateLocalUser } = useAuth();
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(user?.name ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
@@ -106,22 +108,24 @@ export function ProfileScreen() {
         ) : null}
 
         <div style={{ display: "grid", gap: 24, justifyContent: "center", marginTop: 28 }}>
-          <button className="primary-button" style={{ width: 300 }} onClick={() => setEditing((prev) => !prev)}>
+          <button
+            className="primary-button"
+            style={{ width: 300 }}
+            onClick={() => (isGuest ? router.push("/register") : setEditing((prev) => !prev))}
+          >
             {isGuest ? "зарегистрироваться" : "настройки профиля"}
           </button>
+          {isGuest ? (
+            <button className="primary-button" style={{ width: 300 }} onClick={() => router.push("/register")}>
+              перейти к регистрации
+            </button>
+          ) : null}
           <button
             className="primary-button"
             style={{ width: 300 }}
-            onClick={() => window.alert("Напишите нам на getmanovakarina@gmail.com")}
+            onClick={() => window.open("https://t.me/dashamalafeeva", "_blank", "noopener,noreferrer")}
           >
             написать в поддержку
-          </button>
-          <button
-            className="primary-button"
-            style={{ width: 300 }}
-            onClick={() => window.alert("Surprise – помогаем находить идеи подарков.\nВерсия 1.0")}
-          >
-            инфо для клиента
           </button>
           {user?.is_admin ? (
             <Link href="/admin/gifts/new" className="primary-button" style={{ width: 300, lineHeight: "56px" }}>
@@ -190,8 +194,7 @@ export function ProfileScreen() {
                   className="secondary-button"
                   style={{ marginLeft: 12 }}
                   onClick={() => {
-                    startGuest();
-                    window.location.assign("/register");
+                    router.push("/register");
                   }}
                 >
                   перейти к регистрации

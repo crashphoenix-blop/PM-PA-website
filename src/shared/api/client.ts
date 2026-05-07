@@ -1,6 +1,7 @@
 import { sessionStorageService } from "@/shared/lib/storage";
 import type {
   ApiErrorCode,
+  AnalyticsEventPayload,
   AuthResponse,
   Category,
   Gift,
@@ -164,6 +165,12 @@ export const apiClient = {
       withAuth: true
     });
   },
+  getAllGifts(page = 1, perPage = 500) {
+    return request<GiftListResponse>({
+      path: "/gifts",
+      params: { page, per_page: perPage }
+    });
+  },
   getGiftsByCategory(categoryId: number, page = 1, perPage = 200) {
     return request<GiftListResponse>({
       path: "/gifts",
@@ -200,6 +207,13 @@ export const apiClient = {
   }) {
     return request<Gift>({
       path: "/gifts",
+      method: "POST",
+      body: payload
+    });
+  },
+  trackAnalyticsEvent(payload: AnalyticsEventPayload) {
+    return request<{ ok: boolean }>({
+      path: "/analytics/events",
       method: "POST",
       body: payload
     });

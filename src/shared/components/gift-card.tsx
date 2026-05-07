@@ -31,7 +31,10 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
         type="button"
         aria-label="Избранное"
         className="fav-icon-button"
-        onClick={onToggleFavorite}
+        onClick={(event) => {
+          event.stopPropagation();
+          onToggleFavorite();
+        }}
       >
         <Image
           src="/assets/heart.svg"
