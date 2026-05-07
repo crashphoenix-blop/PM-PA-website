@@ -12,10 +12,17 @@ type GiftCardProps = {
 
 export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
   const fallbackSrc = "/assets/star.svg";
-  const [imageSrc, setImageSrc] = useState(gift.image_url || fallbackSrc);
+  const toImageSrc = (raw?: string | null): string => {
+    if (!raw) return fallbackSrc;
+    if (raw.startsWith("http://") || raw.startsWith("https://")) {
+      return `/api/image-proxy?url=${encodeURIComponent(raw)}`;
+    }
+    return raw;
+  };
+  const [imageSrc, setImageSrc] = useState(toImageSrc(gift.image_url));
 
   useEffect(() => {
-    setImageSrc(gift.image_url || fallbackSrc);
+    setImageSrc(toImageSrc(gift.image_url));
   }, [gift.image_url]);
 
   return (
@@ -32,7 +39,6 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
           height={600}
           className="cover"
           unoptimized
-          referrerPolicy="no-referrer"
           onError={() => {
             if (imageSrc !== fallbackSrc) setImageSrc(fallbackSrc);
           }}
