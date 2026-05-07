@@ -55,7 +55,7 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
           height={32}
           style={{
             filter: gift.is_favorite
-              ? "hue-rotate(265deg) saturate(650%) brightness(1.18) contrast(1.15) drop-shadow(0 0 3px rgba(255,150,255,0.9))"
+              ? "invert(17%) sepia(96%) saturate(6586%) hue-rotate(356deg) brightness(97%) contrast(121%)"
               : "grayscale(0.08) opacity(0.85)"
           }}
         />
