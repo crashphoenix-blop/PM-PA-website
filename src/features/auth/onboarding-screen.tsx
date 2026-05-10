@@ -18,40 +18,40 @@ const FIGURE_LAYOUT: Array<{
   titleCompactSize: string;
 }> = [
   {
-    size: "clamp(210px, 58vw, 290px)",
-    top: "64px",
+    size: "clamp(190px, 50vw, 252px)",
+    top: "74px",
+    right: "-8px",
+    copyBottom: "198px",
+    copyMax: "min(86vw, 348px)",
+    titleSize: "clamp(2.22rem, 7.3vw, 3rem)",
+    titleCompactSize: "clamp(2rem, 6.5vw, 2.72rem)"
+  },
+  {
+    size: "clamp(208px, 56vw, 278px)",
+    top: "146px",
     right: "-18px",
-    copyBottom: "284px",
-    copyMax: "min(78vw, 338px)",
-    titleSize: "clamp(2.45rem, 8vw, 3.45rem)",
-    titleCompactSize: "clamp(2.2rem, 7vw, 3rem)"
+    copyBottom: "172px",
+    copyMax: "min(86vw, 352px)",
+    titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
+    titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
   },
   {
-    size: "clamp(230px, 62vw, 320px)",
-    top: "112px",
-    right: "-26px",
-    copyBottom: "248px",
-    copyMax: "min(79vw, 346px)",
-    titleSize: "clamp(2.35rem, 7.4vw, 3.2rem)",
-    titleCompactSize: "clamp(2.08rem, 6.7vw, 2.85rem)"
+    size: "clamp(180px, 49vw, 242px)",
+    top: "92px",
+    right: "18px",
+    copyBottom: "184px",
+    copyMax: "min(84vw, 344px)",
+    titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
+    titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
   },
   {
-    size: "clamp(205px, 56vw, 286px)",
-    top: "76px",
-    right: "2px",
-    copyBottom: "258px",
-    copyMax: "min(78vw, 338px)",
-    titleSize: "clamp(2.35rem, 7.5vw, 3.2rem)",
-    titleCompactSize: "clamp(2.08rem, 6.7vw, 2.85rem)"
-  },
-  {
-    size: "clamp(238px, 64vw, 332px)",
-    top: "84px",
-    right: "-22px",
-    copyBottom: "244px",
-    copyMax: "min(79vw, 350px)",
-    titleSize: "clamp(2.35rem, 7.5vw, 3.2rem)",
-    titleCompactSize: "clamp(2.1rem, 6.8vw, 2.9rem)"
+    size: "clamp(214px, 58vw, 286px)",
+    top: "102px",
+    right: "-8px",
+    copyBottom: "168px",
+    copyMax: "min(86vw, 356px)",
+    titleSize: "clamp(2.18rem, 7.1vw, 3rem)",
+    titleCompactSize: "clamp(2rem, 6.3vw, 2.72rem)"
   }
 ];
 

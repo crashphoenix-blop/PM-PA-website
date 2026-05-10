@@ -304,20 +304,20 @@ input {
   position: absolute;
   left: clamp(16px, 4vw, 24px);
   right: clamp(16px, 4vw, 24px);
-  bottom: var(--copy-bottom, clamp(252px, 34vw, 318px));
-  max-width: var(--copy-max, min(78vw, 340px));
+  bottom: var(--copy-bottom, clamp(166px, 24vw, 230px));
+  max-width: var(--copy-max, min(86vw, 350px));
   z-index: 2;
 }
 
 .onboarding-title {
-  font-size: var(--title-size-mobile, clamp(2.5rem, 8.4vw, 3.55rem));
+  font-size: var(--title-size-mobile, clamp(2.25rem, 7.4vw, 3.1rem));
   line-height: 1;
   color: var(--app-primary);
   margin: 0 0 10px;
 }
 
 .onboarding-title.onboarding-title-compact {
-  font-size: var(--title-size-compact-mobile, clamp(2.25rem, 7.2vw, 3.1rem));
+  font-size: var(--title-size-compact-mobile, clamp(2.02rem, 6.6vw, 2.85rem));
   line-height: 1.01;
   margin-bottom: 12px;
 }
