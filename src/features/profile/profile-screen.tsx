@@ -85,7 +85,7 @@ export function ProfileScreen() {
   return (
     <main className="page">
       <div className="content-width" style={{ textAlign: "center", maxWidth: 680, paddingBottom: 160 }}>
-        <h1 className="miama" style={{ marginTop: 0, fontSize: 36, color: "var(--app-primary)" }}>
+        <h1 className="miama page-title" style={{ marginTop: 0 }}>
           Мой профиль
         </h1>
         <Image
@@ -100,7 +100,9 @@ export function ProfileScreen() {
             padding: 8
           }}
         />
-        <p style={{ fontSize: 24, color: "var(--app-primary)" }}>{user?.name ?? "Гость"}</p>
+        <p className="screen-subtitle" style={{ color: "var(--app-primary)" }}>
+          {user?.name ?? "Гость"}
+        </p>
         {offline ? (
           <p style={{ color: "var(--app-primary)", maxWidth: 540, margin: "0 auto" }}>
             Нет соединения. Показаны сохранённые данные.
@@ -136,7 +138,7 @@ export function ProfileScreen() {
 
         {editing ? (
           <section style={{ marginTop: 28, textAlign: "left" }}>
-            <h2 className="miama" style={{ fontSize: 32, textAlign: "center", color: "var(--app-primary)" }}>
+            <h2 className="miama page-title" style={{ textAlign: "center" }}>
               Настройки профиля
             </h2>
             <p style={{ textAlign: "center", opacity: 0.65 }}>Не забудьте сохранить данные</p>

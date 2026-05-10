@@ -50,7 +50,7 @@ export function FavoritesScreen() {
         {loading ? <p style={{ marginTop: 24 }}>Загрузка...</p> : null}
         {error ? <p style={{ color: "crimson", marginTop: 16 }}>{error}</p> : null}
         {!loading && items.length === 0 ? (
-          <p className="miama" style={{ marginTop: 32, fontSize: 23, whiteSpace: "pre-line" }}>
+          <p className="miama screen-subtitle" style={{ marginTop: 32, whiteSpace: "pre-line" }}>
             {"Ай!\nВ избранном пока пусто"}
           </p>
         ) : null}

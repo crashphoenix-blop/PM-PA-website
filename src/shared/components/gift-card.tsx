@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { Gift } from "@/shared/api/types";
+import { resolveApiAssetUrl } from "@/shared/api/client";
 
 type GiftCardProps = {
   gift: Gift;
@@ -19,11 +20,16 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
       setImageSrc(fallbackSrc);
       return;
     }
-    if (gift.image_url.startsWith("http://") || gift.image_url.startsWith("https://")) {
-      setImageSrc(`/api/image-proxy?url=${encodeURIComponent(gift.image_url)}&title=${encodeURIComponent(gift.name)}`);
+    const resolved = resolveApiAssetUrl(gift.image_url);
+    if (gift.image_url.startsWith("/media/")) {
+      setImageSrc(resolved);
       return;
     }
-    setImageSrc(gift.image_url);
+    if (resolved.startsWith("http://") || resolved.startsWith("https://")) {
+      setImageSrc(`/api/image-proxy?url=${encodeURIComponent(resolved)}&title=${encodeURIComponent(gift.name)}`);
+      return;
+    }
+    setImageSrc(resolved);
   }, [gift.image_url, gift.name]);
 
   return (

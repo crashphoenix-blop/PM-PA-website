@@ -42,9 +42,11 @@ export function LoginScreen() {
 
   return (
     <main className="page">
-      <div className="content-width" style={{ maxWidth: 560 }}>
-        <h1 style={{ textAlign: "center", marginTop: 64, color: "var(--app-primary)" }}>ВХОД</h1>
-        <form onSubmit={onSubmit} style={{ marginTop: 34 }}>
+      <div className="content-width auth-shell">
+        <h1 className="auth-title" style={{ marginTop: 64 }}>
+          ВХОД
+        </h1>
+        <form onSubmit={onSubmit} className="auth-form" style={{ marginTop: 34 }}>
           <label className="field-label" htmlFor="identity">
             почта/номер телефона
           </label>
@@ -78,7 +80,7 @@ export function LoginScreen() {
 
           {error ? <p style={{ color: "crimson", marginTop: 12 }}>{error}</p> : null}
 
-          <div style={{ display: "grid", gap: 16, justifyContent: "center", marginTop: 28 }}>
+          <div className="auth-actions" style={{ marginTop: 28 }}>
             <button type="submit" className="primary-button" disabled={submitting}>
               вход
             </button>

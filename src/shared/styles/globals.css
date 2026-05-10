@@ -1,6 +1,6 @@
 :root {
   --app-primary: #524141;
-  --app-background: #e7e1db;
+  --app-background: #dbcece;
   --app-secondary: #a68e8e;
   --app-fav-active: #d18bff;
   --app-white: #ffffff;
@@ -18,7 +18,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: var(--font-helvetica), Helvetica, Arial, sans-serif;
   background: var(--app-background);
   color: var(--app-text-main);
 }
@@ -40,12 +40,26 @@ input {
 }
 
 .content-width {
-  width: min(100%, 980px);
+  width: min(100%, 1120px);
   margin: 0 auto;
 }
 
 .miama {
-  font-family: "Times New Roman", "Snell Roundhand", cursive;
+  font-family: var(--font-miama), "Times New Roman", "Snell Roundhand", cursive;
+  font-weight: 500;
+}
+
+.screen-title {
+  font-size: clamp(2rem, 2.2vw + 1.1rem, 2.55rem);
+  line-height: 1;
+  color: var(--app-primary);
+  margin: 0;
+}
+
+.screen-subtitle {
+  font-size: clamp(1.125rem, 1vw + 0.85rem, 1.5rem);
+  color: var(--app-text-main);
+  margin: 0;
 }
 
 .primary-button {
@@ -53,7 +67,8 @@ input {
   border-radius: 27.5px;
   min-height: 55px;
   padding: 0 32px;
-  font-size: 21px;
+  font-size: clamp(1rem, 0.5vw + 0.9rem, 1.3125rem);
+  font-weight: 400;
   background: var(--app-secondary);
   color: var(--app-text-secondary);
   cursor: pointer;
@@ -64,8 +79,8 @@ input {
   border-radius: 20px;
   min-height: 40px;
   padding: 0 24px;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 400;
   background: var(--app-secondary);
   color: var(--app-text-secondary);
   cursor: pointer;
@@ -88,28 +103,30 @@ input {
   display: block;
   margin-bottom: 8px;
   font-style: italic;
-  font-size: 20px;
+  font-size: clamp(1rem, 0.45vw + 0.9rem, 1.25rem);
 }
 
 .field-input {
   width: 100%;
-  min-height: 43px;
+  min-height: 56px;
   border-radius: 21.5px;
   border: 0;
   outline: none;
   padding: 0 24px;
   background: rgba(166, 142, 142, 0.33);
+  font-size: 1.05rem;
 }
 
 .search-input {
   width: 100%;
-  min-height: 44px;
+  min-height: 47px;
   border-radius: 12px;
   border: none;
   outline: none;
   padding: 0 14px;
   color: var(--app-primary);
   background: var(--app-white);
+  font-size: clamp(1rem, 0.35vw + 0.9rem, 1.125rem);
 }
 
 .tabbar-shell {
@@ -123,7 +140,7 @@ input {
 }
 
 .tabbar-button {
-  width: 110px;
+  width: clamp(96px, 10vw, 110px);
   height: 59px;
   border-radius: 29.5px;
   border: 0;
@@ -144,7 +161,7 @@ input {
 .gift-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: clamp(12px, 1.8vw, 18px);
   padding-bottom: 120px;
 }
 
@@ -178,6 +195,7 @@ input {
 .gift-meta-title {
   font-size: 13px;
   margin: 0;
+  line-height: 1.15;
 }
 
 .gift-meta-price {
@@ -219,7 +237,7 @@ input {
   border-radius: 19px;
   border: 0;
   padding: 0 20px;
-  font-size: 21px;
+  font-size: clamp(1rem, 0.6vw + 0.9rem, 1.3125rem);
   color: var(--app-text-secondary);
   background: var(--app-secondary);
   white-space: nowrap;
@@ -227,9 +245,120 @@ input {
 }
 
 .page-title {
-  font-size: 32px;
+  font-size: clamp(2rem, 1.2vw + 1.6rem, 2.5rem);
   margin: 0;
   color: var(--app-primary);
+}
+
+.auth-shell {
+  max-width: 560px;
+}
+
+.auth-title {
+  font-size: clamp(2.2rem, 2vw + 1.6rem, 2.95rem);
+  color: var(--app-primary);
+  text-align: center;
+}
+
+.auth-form {
+  margin-top: 30px;
+}
+
+.auth-actions {
+  display: grid;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 26px;
+}
+
+.auth-actions .primary-button {
+  width: 216px;
+}
+
+.auth-back {
+  border: 0;
+  background: transparent;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.onboarding-shell {
+  min-height: 100dvh;
+  position: relative;
+  padding-top: clamp(88px, 14vh, 118px);
+}
+
+.onboarding-figure {
+  position: absolute;
+  right: clamp(-12px, 2vw, 24px);
+  top: clamp(80px, 11vh, 116px);
+  width: clamp(100px, 20vw, 190px);
+  opacity: 0.5;
+}
+
+.onboarding-copy {
+  max-width: min(76vw, 590px);
+}
+
+.onboarding-title {
+  font-size: clamp(2.25rem, 2.8vw + 1.1rem, 5.7rem);
+  line-height: 0.92;
+  color: var(--app-primary);
+  margin: 0;
+}
+
+.onboarding-text {
+  margin-top: 8px;
+  font-size: clamp(1rem, 0.7vw + 0.85rem, 1.125rem);
+  line-height: 1.35;
+  color: var(--app-primary);
+}
+
+.onboarding-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.onboarding-footer-inner {
+  width: min(100%, 1120px);
+  padding: 0 25px;
+}
+
+.onboarding-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.onboarding-skip {
+  font-size: 11px;
+  min-height: 31px;
+  border-radius: 15.5px;
+  padding: 0 16px;
+}
+
+.onboarding-nav {
+  display: flex;
+  gap: 12px;
+}
+
+.onboarding-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.onboarding-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 @media (min-width: 900px) {
@@ -239,5 +368,15 @@ input {
 
   .gift-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .auth-shell {
+    max-width: 620px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gift-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

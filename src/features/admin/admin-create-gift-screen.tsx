@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/features/auth/auth-context";
-import { apiClient } from "@/shared/api/client";
+import { apiClient, resolveApiAssetUrl } from "@/shared/api/client";
 import type { Category } from "@/shared/api/types";
 
 export function AdminCreateGiftScreen() {
@@ -14,6 +14,8 @@ export function AdminCreateGiftScreen() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [storeName, setStoreName] = useState("");
   const [storeUrl, setStoreUrl] = useState("");
   const [newGroups, setNewGroups] = useState("");
@@ -86,19 +88,25 @@ export function AdminCreateGiftScreen() {
       setError("Введите корректную стоимость");
       return;
     }
-    if (!imageUrl.trim()) {
-      setError("Добавьте ссылку на изображение");
+    if (!imageUrl.trim() && !imageFile) {
+      setError("Добавьте ссылку или загрузите изображение");
       return;
     }
     setError(null);
     setSuccess(null);
     setSaving(true);
     try {
+      let finalImageUrl = imageUrl.trim();
+      if (imageFile) {
+        setUploadingImage(true);
+        const uploadResult = await apiClient.uploadGiftImage(imageFile);
+        finalImageUrl = uploadResult.image_url;
+      }
       await apiClient.createGift({
         name: name.trim(),
         description: description.trim() || undefined,
         price: Number(price),
-        image_url: imageUrl.trim(),
+        image_url: finalImageUrl,
         store_name: storeName.trim() || undefined,
         store_url: storeUrl.trim() || undefined,
         category_ids: [...selectedCategoryIds],
@@ -109,6 +117,7 @@ export function AdminCreateGiftScreen() {
       setDescription("");
       setPrice("");
       setImageUrl("");
+      setImageFile(null);
       setStoreName("");
       setStoreUrl("");
       setNewGroups("");
@@ -117,6 +126,7 @@ export function AdminCreateGiftScreen() {
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Не удалось добавить подарок");
     } finally {
+      setUploadingImage(false);
       setSaving(false);
     }
   };
@@ -154,9 +164,31 @@ export function AdminCreateGiftScreen() {
         />
 
         <label className="field-label" style={{ marginTop: 14 }}>
-          Ссылка на фото
+          Ссылка на фото (или загрузка ниже)
         </label>
         <input className="field-input" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} />
+        <label className="field-label" style={{ marginTop: 14 }}>
+          Загрузить фото в хранилище
+        </label>
+        <input
+          className="field-input"
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif"
+          onChange={(event) => {
+            setImageFile(event.target.files?.[0] ?? null);
+            setError(null);
+          }}
+        />
+        {imageFile ? (
+          <p style={{ marginTop: 8, marginBottom: 0 }}>
+            Файл: {imageFile.name} {uploadingImage ? "(загрузка...)" : ""}
+          </p>
+        ) : null}
+        {imageUrl ? (
+          <p style={{ marginTop: 8, marginBottom: 0, fontSize: 13 }}>
+            Текущий URL: {resolveApiAssetUrl(imageUrl)}
+          </p>
+        ) : null}
 
         <label className="field-label" style={{ marginTop: 14 }}>
           Магазин
@@ -201,8 +233,8 @@ export function AdminCreateGiftScreen() {
         {success ? <p style={{ color: "green", marginTop: 14 }}>{success}</p> : null}
 
         <div style={{ display: "flex", gap: 12, marginTop: 18 }}>
-          <button className="primary-button" onClick={() => void onSubmit()} disabled={saving}>
-            {saving ? "Сохраняю..." : "Добавить подарок"}
+          <button className="primary-button" onClick={() => void onSubmit()} disabled={saving || uploadingImage}>
+            {saving || uploadingImage ? "Сохраняю..." : "Добавить подарок"}
           </button>
           <Link href="/profile" className="secondary-button" style={{ lineHeight: "56px" }}>
             Назад

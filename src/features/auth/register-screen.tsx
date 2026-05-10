@@ -50,17 +50,19 @@ export function RegisterScreen() {
 
   return (
     <main className="page">
-      <div className="content-width" style={{ maxWidth: 560 }}>
+      <div className="content-width auth-shell">
         <button
           type="button"
           onClick={() => router.push("/welcome")}
-          style={{ border: 0, background: "transparent", marginTop: 12, cursor: "pointer" }}
+          className="auth-back"
           aria-label="Назад"
         >
           <Image src="/assets/back_icon.svg" alt="" width={40} height={40} />
         </button>
-        <h1 style={{ textAlign: "center", marginTop: 8, color: "var(--app-primary)" }}>РЕГИСТРАЦИЯ</h1>
-        <form onSubmit={onSubmit} style={{ marginTop: 30 }}>
+        <h1 className="auth-title" style={{ marginTop: 8 }}>
+          РЕГИСТРАЦИЯ
+        </h1>
+        <form onSubmit={onSubmit} className="auth-form">
           <label className="field-label" htmlFor="reg-identity">
             почта/номер телефона
           </label>
@@ -104,7 +106,7 @@ export function RegisterScreen() {
 
           {error ? <p style={{ color: "crimson", marginTop: 12 }}>{error}</p> : null}
 
-          <div style={{ display: "grid", gap: 16, justifyContent: "center", marginTop: 26 }}>
+          <div className="auth-actions">
             <button type="submit" className="primary-button" disabled={submitting}>
               продолжить
             </button>

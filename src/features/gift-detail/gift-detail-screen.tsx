@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { apiClient } from "@/shared/api/client";
+import { apiClient, resolveApiAssetUrl } from "@/shared/api/client";
 import type { Gift } from "@/shared/api/types";
 import { toggleFavorite } from "@/features/favorites/favorites-service";
 import { trackEvent } from "@/shared/analytics/tracker";
@@ -27,12 +27,14 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
           setGift(details);
           if (!details.image_url) {
             setImageSrc(fallbackSrc);
+          } else if (details.image_url.startsWith("/media/")) {
+            setImageSrc(resolveApiAssetUrl(details.image_url));
           } else if (details.image_url.startsWith("http://") || details.image_url.startsWith("https://")) {
             setImageSrc(
-              `/api/image-proxy?url=${encodeURIComponent(details.image_url)}&title=${encodeURIComponent(details.name)}`
+              `/api/image-proxy?url=${encodeURIComponent(resolveApiAssetUrl(details.image_url))}&title=${encodeURIComponent(details.name)}`
             );
           } else {
-            setImageSrc(details.image_url);
+            setImageSrc(resolveApiAssetUrl(details.image_url));
           }
         }
       } catch (loadError) {
@@ -105,12 +107,16 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
         </div>
 
         <section style={{ padding: "20px 20px 0" }}>
-          <h1 style={{ margin: 0, fontSize: 23 }}>{gift.name}</h1>
-          <h2 style={{ marginTop: 8, marginBottom: 0, fontSize: 15 }}>Описание</h2>
-          <p style={{ marginTop: 8, fontSize: 13 }} onClick={() => setExpanded((prev) => !prev)}>
+          <h1 className="screen-subtitle" style={{ margin: 0 }}>
+            {gift.name}
+          </h1>
+          <h2 style={{ marginTop: 8, marginBottom: 0, fontSize: 15, fontWeight: 700 }}>Описание</h2>
+          <p style={{ marginTop: 8, fontSize: 13, lineHeight: 1.35 }} onClick={() => setExpanded((prev) => !prev)}>
             {expanded ? `${description}  Свернуть` : collapsedDescription}
           </p>
-          <p style={{ fontSize: 32, marginTop: 12 }}>{Math.trunc(gift.price)}₽</p>
+          <p className="page-title" style={{ marginTop: 12 }}>
+            {Math.trunc(gift.price)}₽
+          </p>
         </section>
 
         <div

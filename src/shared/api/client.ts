@@ -13,6 +13,12 @@ import type {
 import { ApiError } from "@/shared/api/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
+export const resolveApiAssetUrl = (pathOrUrl: string | null | undefined): string => {
+  if (!pathOrUrl) return "";
+  if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) return pathOrUrl;
+  if (pathOrUrl.startsWith("/")) return new URL(pathOrUrl, API_BASE_URL).toString();
+  return pathOrUrl;
+};
 
 const buildUrl = (path: string, params?: Record<string, string | number | undefined>): string => {
   const url = new URL(path, API_BASE_URL);
@@ -211,6 +217,30 @@ export const apiClient = {
       method: "POST",
       body: payload
     });
+  },
+  async uploadGiftImage(file: File): Promise<{ image_url: string }> {
+    const token = sessionStorageService.getToken();
+    if (!token) throw new ApiError("Unauthorized", "UNAUTHORIZED", 401);
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch(buildUrl("/gifts/upload-image"), {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      body: formData
+    });
+    if (!response.ok) {
+      let detail = `HTTP ${response.status}`;
+      try {
+        const payload = (await response.json()) as { detail?: string };
+        if (payload.detail) detail = payload.detail;
+      } catch {
+        // keep fallback
+      }
+      throw toApiError(response.status, detail);
+    }
+    return (await response.json()) as { image_url: string };
   },
   trackAnalyticsEvent(payload: AnalyticsEventPayload) {
     return request<{ ok: boolean }>({

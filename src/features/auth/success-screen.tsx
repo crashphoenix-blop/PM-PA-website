@@ -22,15 +22,14 @@ export function SuccessScreen() {
           <Image src="/assets/star.svg" alt="" width={88} height={100} style={{ marginTop: -80 }} />
         </div>
         <h1
+          className="screen-title"
           style={{
             margin: 0,
             position: "absolute",
             left: 42,
             bottom: 73,
             whiteSpace: "pre-line",
-            fontSize: 51,
-            lineHeight: 0.8,
-            color: "var(--app-primary)"
+            lineHeight: 0.85
           }}
         >
           {"Регистрация\nпрошла\nуспешно"}

@@ -14,10 +14,10 @@ export function WelcomeScreen() {
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Image src="/assets/star.svg" alt="" width={100} height={100} style={{ opacity: 0.4 }} />
         </div>
-        <h1 className="miama" style={{ color: "var(--app-primary)", fontSize: 43, marginTop: 80 }}>
+        <h1 className="miama screen-title" style={{ marginTop: 80 }}>
           Приветствуем!
         </h1>
-        <div style={{ display: "grid", gap: 16, justifyContent: "center", marginTop: 100 }}>
+        <div className="auth-actions" style={{ marginTop: 100 }}>
           <button className="primary-button" onClick={() => router.push("/login")}>
             вход
           </button>

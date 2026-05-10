@@ -118,7 +118,7 @@ export function FeedScreen() {
   return (
     <main className="page">
       <div className="content-width">
-        <h1 style={{ margin: "0 0 6px", fontSize: 28, color: "var(--app-primary)" }}>
+        <h1 className="page-title" style={{ margin: "0 0 6px" }}>
           Привет, <span className="miama">{greetingsName}</span>
         </h1>
 

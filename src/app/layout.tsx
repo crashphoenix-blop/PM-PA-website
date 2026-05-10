@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import Script from "next/script";
 import { AppProviders } from "@/app/providers";
 import "@/shared/styles/globals.css";
@@ -8,12 +9,32 @@ export const metadata: Metadata = {
   description: "Web version of Surprise iOS app"
 };
 
+const helvetica = localFont({
+  src: [
+    { path: "../../public/fonts/helvetica_light.otf", weight: "300", style: "normal" },
+    { path: "../../public/fonts/helvetica_regular.otf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/helvetica_oblique.otf", weight: "400", style: "italic" },
+    { path: "../../public/fonts/helvetica_bold.otf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/helvetica_boldoblique.otf", weight: "700", style: "italic" }
+  ],
+  variable: "--font-helvetica",
+  display: "swap"
+});
+
+const miama = localFont({
+  src: [
+    { path: "../../public/fonts/miamanueva.otf", weight: "500", style: "normal" }
+  ],
+  variable: "--font-miama",
+  display: "swap"
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const yandexMetrikaId = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
 
   return (
     <html lang="ru">
-      <body>
+      <body className={`${helvetica.variable} ${miama.variable}`}>
         {yandexMetrikaId ? (
           <Script
             id="yandex-metrika"
