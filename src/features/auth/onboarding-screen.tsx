@@ -13,10 +13,10 @@ const FIGURE_LAYOUT: Array<{
   top: string;
   right: string;
 }> = [
-  { size: "clamp(220px, 52vw, 420px)", top: "clamp(58px, 8.5vh, 112px)", right: "clamp(-12px, 1vw, 28px)" },
-  { size: "clamp(240px, 58vw, 470px)", top: "clamp(92px, 11vh, 170px)", right: "clamp(-24px, -2vw, 8px)" },
-  { size: "clamp(210px, 48vw, 390px)", top: "clamp(70px, 9.5vh, 130px)", right: "clamp(0px, 2vw, 38px)" },
-  { size: "clamp(235px, 55vw, 445px)", top: "clamp(76px, 10vh, 142px)", right: "clamp(-8px, 1vw, 24px)" }
+  { size: "clamp(250px, 66vw, 520px)", top: "clamp(44px, 6vh, 86px)", right: "clamp(-34px, -7vw, -2px)" },
+  { size: "clamp(270px, 70vw, 560px)", top: "clamp(102px, 12vh, 188px)", right: "clamp(-34px, -8vw, -4px)" },
+  { size: "clamp(235px, 62vw, 500px)", top: "clamp(60px, 8vh, 112px)", right: "clamp(-8px, -2vw, 22px)" },
+  { size: "clamp(270px, 72vw, 570px)", top: "clamp(66px, 9vh, 132px)", right: "clamp(-28px, -6vw, 6px)" }
 ];
 
 export function OnboardingScreen() {
