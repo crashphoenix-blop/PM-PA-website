@@ -302,19 +302,19 @@ input {
   position: absolute;
   left: clamp(16px, 4vw, 24px);
   right: clamp(16px, 4vw, 24px);
-  bottom: clamp(236px, 26vh, 308px);
-  max-width: min(92vw, 760px);
+  bottom: var(--copy-bottom, clamp(228px, 30vh, 360px));
+  max-width: var(--copy-max, min(92vw, 760px));
 }
 
 .onboarding-title {
-  font-size: clamp(2.9rem, 8.8vw, 4.6rem);
+  font-size: var(--title-size-mobile, clamp(2.9rem, 8.8vw, 4.6rem));
   line-height: 1.02;
   color: var(--app-primary);
   margin: 0 0 10px;
 }
 
 .onboarding-title.onboarding-title-compact {
-  font-size: clamp(2.55rem, 7.2vw, 3.8rem);
+  font-size: var(--title-size-compact-mobile, clamp(2.55rem, 7.2vw, 3.8rem));
   line-height: 1.02;
   margin-bottom: 12px;
 }

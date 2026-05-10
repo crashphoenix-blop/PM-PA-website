@@ -12,11 +12,47 @@ const FIGURE_LAYOUT: Array<{
   size: string;
   top: string;
   right: string;
+  copyBottom: string;
+  copyMax: string;
+  titleSize: string;
+  titleCompactSize: string;
 }> = [
-  { size: "clamp(250px, 66vw, 520px)", top: "clamp(44px, 6vh, 86px)", right: "clamp(-34px, -7vw, -2px)" },
-  { size: "clamp(270px, 70vw, 560px)", top: "clamp(102px, 12vh, 188px)", right: "clamp(-34px, -8vw, -4px)" },
-  { size: "clamp(235px, 62vw, 500px)", top: "clamp(60px, 8vh, 112px)", right: "clamp(-8px, -2vw, 22px)" },
-  { size: "clamp(270px, 72vw, 570px)", top: "clamp(66px, 9vh, 132px)", right: "clamp(-28px, -6vw, 6px)" }
+  {
+    size: "clamp(280px, 74vw, 620px)",
+    top: "clamp(48px, 6.8vh, 94px)",
+    right: "clamp(-38px, -9vw, -6px)",
+    copyBottom: "clamp(340px, 43vh, 520px)",
+    copyMax: "min(90vw, 760px)",
+    titleSize: "clamp(2.95rem, 9.2vw, 4.9rem)",
+    titleCompactSize: "clamp(2.65rem, 7.6vw, 4.1rem)"
+  },
+  {
+    size: "clamp(290px, 77vw, 640px)",
+    top: "clamp(106px, 13vh, 204px)",
+    right: "clamp(-44px, -10vw, -10px)",
+    copyBottom: "clamp(300px, 37vh, 450px)",
+    copyMax: "min(92vw, 780px)",
+    titleSize: "clamp(2.75rem, 8.8vw, 4.5rem)",
+    titleCompactSize: "clamp(2.45rem, 7.2vw, 3.8rem)"
+  },
+  {
+    size: "clamp(250px, 68vw, 560px)",
+    top: "clamp(66px, 8.8vh, 126px)",
+    right: "clamp(-12px, -2vw, 20px)",
+    copyBottom: "clamp(292px, 36vh, 430px)",
+    copyMax: "min(90vw, 740px)",
+    titleSize: "clamp(2.75rem, 8.4vw, 4.5rem)",
+    titleCompactSize: "clamp(2.4rem, 6.9vw, 3.7rem)"
+  },
+  {
+    size: "clamp(300px, 79vw, 650px)",
+    top: "clamp(74px, 10.2vh, 146px)",
+    right: "clamp(-30px, -7vw, 6px)",
+    copyBottom: "clamp(284px, 35vh, 420px)",
+    copyMax: "min(92vw, 780px)",
+    titleSize: "clamp(2.75rem, 8.6vw, 4.6rem)",
+    titleCompactSize: "clamp(2.5rem, 7.3vw, 3.9rem)"
+  }
 ];
 
 export function OnboardingScreen() {
@@ -28,7 +64,11 @@ export function OnboardingScreen() {
   const figureStyle = {
     "--figure-size": figureLayout.size,
     "--figure-top": figureLayout.top,
-    "--figure-right": figureLayout.right
+    "--figure-right": figureLayout.right,
+    "--copy-bottom": figureLayout.copyBottom,
+    "--copy-max": figureLayout.copyMax,
+    "--title-size-mobile": figureLayout.titleSize,
+    "--title-size-compact-mobile": figureLayout.titleCompactSize
   } as CSSProperties;
 
   const finish = () => {
