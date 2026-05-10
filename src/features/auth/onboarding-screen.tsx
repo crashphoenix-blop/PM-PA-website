@@ -6,12 +6,30 @@ import { useRouter } from "next/navigation";
 import { onboardingSteps } from "@/shared/lib/constants";
 import { sessionStorageService } from "@/shared/lib/storage";
 import { trackEvent } from "@/shared/analytics/tracker";
+import type { CSSProperties } from "react";
+
+const FIGURE_LAYOUT: Array<{
+  size: string;
+  top: string;
+  right: string;
+}> = [
+  { size: "clamp(220px, 52vw, 420px)", top: "clamp(58px, 8.5vh, 112px)", right: "clamp(-12px, 1vw, 28px)" },
+  { size: "clamp(240px, 58vw, 470px)", top: "clamp(92px, 11vh, 170px)", right: "clamp(-24px, -2vw, 8px)" },
+  { size: "clamp(210px, 48vw, 390px)", top: "clamp(70px, 9.5vh, 130px)", right: "clamp(0px, 2vw, 38px)" },
+  { size: "clamp(235px, 55vw, 445px)", top: "clamp(76px, 10vh, 142px)", right: "clamp(-8px, 1vw, 24px)" }
+];
 
 export function OnboardingScreen() {
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const step = onboardingSteps[index];
   const isLast = index === onboardingSteps.length - 1;
+  const figureLayout = FIGURE_LAYOUT[index] ?? FIGURE_LAYOUT[0];
+  const figureStyle = {
+    "--figure-size": figureLayout.size,
+    "--figure-top": figureLayout.top,
+    "--figure-right": figureLayout.right
+  } as CSSProperties;
 
   const finish = () => {
     sessionStorageService.setOnboardingCompleted(true);
@@ -22,7 +40,7 @@ export function OnboardingScreen() {
   return (
     <main className="page">
       <div className="content-width onboarding-shell">
-        <Image src={step.image} alt="" width={180} height={180} className="onboarding-figure" />
+        <Image src={step.image} alt="" width={320} height={320} className="onboarding-figure" style={figureStyle} />
         <div className="onboarding-copy">
           <h1 className={`miama onboarding-title${step.description ? " onboarding-title-compact" : ""}`}>{step.title}</h1>
           {step.description ? <p className="onboarding-text">{step.description}</p> : null}

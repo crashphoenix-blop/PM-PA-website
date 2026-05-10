@@ -290,11 +290,12 @@ input {
 
 .onboarding-figure {
   position: absolute;
-  right: clamp(8px, 3vw, 48px);
-  top: clamp(72px, 9vh, 118px);
-  width: clamp(190px, 28vw, 360px);
+  right: var(--figure-right, clamp(-8px, 2vw, 36px));
+  top: var(--figure-top, clamp(56px, 8vh, 104px));
+  width: var(--figure-size, clamp(220px, 45vw, 420px));
   height: auto;
   opacity: 0.5;
+  pointer-events: none;
 }
 
 .onboarding-copy {
@@ -316,7 +317,7 @@ input {
 
 .onboarding-text {
   margin-top: 0;
-  font-size: clamp(1rem, 0.55vw + 0.9rem, 2.2rem);
+  font-size: clamp(1rem, 0.55vw + 0.9rem, 1.125rem);
   line-height: 1.28;
   color: var(--app-primary);
   max-width: min(70vw, 720px);
