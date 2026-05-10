@@ -290,28 +290,36 @@ input {
 
 .onboarding-figure {
   position: absolute;
-  right: clamp(-12px, 2vw, 24px);
-  top: clamp(80px, 11vh, 116px);
-  width: clamp(100px, 20vw, 190px);
+  right: clamp(8px, 3vw, 48px);
+  top: clamp(72px, 9vh, 118px);
+  width: clamp(190px, 28vw, 360px);
+  height: auto;
   opacity: 0.5;
 }
 
 .onboarding-copy {
-  max-width: min(76vw, 590px);
+  max-width: min(76vw, 700px);
 }
 
 .onboarding-title {
-  font-size: clamp(2.25rem, 2.8vw + 1.1rem, 5.7rem);
-  line-height: 0.92;
+  font-size: clamp(2.2rem, 2.6vw + 1rem, 4.6rem);
+  line-height: 1.06;
   color: var(--app-primary);
-  margin: 0;
+  margin: 0 0 10px;
+}
+
+.onboarding-title.onboarding-title-compact {
+  font-size: clamp(2rem, 1.8vw + 0.95rem, 3.8rem);
+  line-height: 1.08;
+  margin-bottom: 12px;
 }
 
 .onboarding-text {
-  margin-top: 8px;
-  font-size: clamp(1rem, 0.7vw + 0.85rem, 1.125rem);
-  line-height: 1.35;
+  margin-top: 0;
+  font-size: clamp(1rem, 0.55vw + 0.9rem, 2.2rem);
+  line-height: 1.28;
   color: var(--app-primary);
+  max-width: min(70vw, 720px);
 }
 
 .onboarding-footer {
@@ -372,6 +380,14 @@ input {
 
   .auth-shell {
     max-width: 620px;
+  }
+
+  .onboarding-copy {
+    max-width: min(70vw, 760px);
+  }
+
+  .onboarding-text {
+    max-width: min(62vw, 760px);
   }
 }
 

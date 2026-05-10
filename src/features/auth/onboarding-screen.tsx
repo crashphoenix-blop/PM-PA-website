@@ -24,7 +24,7 @@ export function OnboardingScreen() {
       <div className="content-width onboarding-shell">
         <Image src={step.image} alt="" width={180} height={180} className="onboarding-figure" />
         <div className="onboarding-copy">
-          <h1 className="miama onboarding-title">{step.title}</h1>
+          <h1 className={`miama onboarding-title${step.description ? " onboarding-title-compact" : ""}`}>{step.title}</h1>
           {step.description ? <p className="onboarding-text">{step.description}</p> : null}
         </div>
 
