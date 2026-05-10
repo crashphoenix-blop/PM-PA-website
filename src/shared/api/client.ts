@@ -171,12 +171,35 @@ export const apiClient = {
       withAuth: true
     });
   },
-  getAllGifts(page = 1, perPage = 500) {
-    return request<GiftListResponse>({
+  async getAllGifts(page = 1, perPage = 100) {
+    const firstPage = await request<GiftListResponse>({
       path: "/gifts",
       params: { page, per_page: perPage },
       withAuth: false
     });
+
+    const allGifts = [...firstPage.gifts];
+    let currentPage = firstPage.page + 1;
+    const maxPages = 50; // safety guard against accidental infinite loops
+
+    while (allGifts.length < firstPage.total && currentPage <= maxPages) {
+      const nextPage = await request<GiftListResponse>({
+        path: "/gifts",
+        params: { page: currentPage, per_page: perPage },
+        withAuth: false
+      });
+
+      if (nextPage.gifts.length === 0) break;
+      allGifts.push(...nextPage.gifts);
+      currentPage += 1;
+    }
+
+    return {
+      gifts: allGifts,
+      total: allGifts.length,
+      page: 1,
+      per_page: allGifts.length
+    };
   },
   getGiftsByCategory(categoryId: number, page = 1, perPage = 200) {
     return request<GiftListResponse>({
