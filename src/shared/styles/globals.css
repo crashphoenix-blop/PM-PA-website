@@ -283,48 +283,51 @@ input {
 }
 
 .onboarding-shell {
-  min-height: 100dvh;
+  min-height: 100svh;
   position: relative;
   padding-top: 0;
+  overflow: hidden;
 }
 
 .onboarding-figure {
   position: absolute;
-  right: var(--figure-right, clamp(-26px, -6vw, 0px));
-  top: var(--figure-top, clamp(56px, 7vh, 96px));
-  width: var(--figure-size, clamp(240px, 62vw, 460px));
+  right: var(--figure-right, -14px);
+  top: var(--figure-top, 64px);
+  width: var(--figure-size, clamp(190px, 52vw, 280px));
   height: auto;
   opacity: 0.5;
   pointer-events: none;
+  z-index: 1;
 }
 
 .onboarding-copy {
   position: absolute;
   left: clamp(16px, 4vw, 24px);
   right: clamp(16px, 4vw, 24px);
-  bottom: var(--copy-bottom, clamp(228px, 30vh, 360px));
-  max-width: var(--copy-max, min(92vw, 760px));
+  bottom: var(--copy-bottom, clamp(252px, 34vw, 318px));
+  max-width: var(--copy-max, min(78vw, 340px));
+  z-index: 2;
 }
 
 .onboarding-title {
-  font-size: var(--title-size-mobile, clamp(2.9rem, 8.8vw, 4.6rem));
-  line-height: 1.02;
+  font-size: var(--title-size-mobile, clamp(2.5rem, 8.4vw, 3.55rem));
+  line-height: 1;
   color: var(--app-primary);
   margin: 0 0 10px;
 }
 
 .onboarding-title.onboarding-title-compact {
-  font-size: var(--title-size-compact-mobile, clamp(2.55rem, 7.2vw, 3.8rem));
-  line-height: 1.02;
+  font-size: var(--title-size-compact-mobile, clamp(2.25rem, 7.2vw, 3.1rem));
+  line-height: 1.01;
   margin-bottom: 12px;
 }
 
 .onboarding-text {
   margin-top: 0;
-  font-size: clamp(1.35rem, 3.1vw, 1.75rem);
-  line-height: 1.22;
+  font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+  line-height: 1.25;
   color: var(--app-primary);
-  max-width: min(92vw, 760px);
+  max-width: min(78vw, 340px);
 }
 
 .onboarding-footer {
@@ -334,6 +337,7 @@ input {
   bottom: max(20px, env(safe-area-inset-bottom));
   display: flex;
   justify-content: center;
+  z-index: 4;
 }
 
 .onboarding-footer-inner {
@@ -389,6 +393,7 @@ input {
 
   .onboarding-shell {
     padding-top: clamp(88px, 14vh, 118px);
+    overflow: visible;
   }
 
   .onboarding-figure {

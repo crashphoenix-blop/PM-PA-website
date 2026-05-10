@@ -18,40 +18,40 @@ const FIGURE_LAYOUT: Array<{
   titleCompactSize: string;
 }> = [
   {
-    size: "clamp(280px, 74vw, 620px)",
-    top: "clamp(48px, 6.8vh, 94px)",
-    right: "clamp(-38px, -9vw, -6px)",
-    copyBottom: "clamp(340px, 43vh, 520px)",
-    copyMax: "min(90vw, 760px)",
-    titleSize: "clamp(2.95rem, 9.2vw, 4.9rem)",
-    titleCompactSize: "clamp(2.65rem, 7.6vw, 4.1rem)"
+    size: "clamp(210px, 58vw, 290px)",
+    top: "64px",
+    right: "-18px",
+    copyBottom: "284px",
+    copyMax: "min(78vw, 338px)",
+    titleSize: "clamp(2.45rem, 8vw, 3.45rem)",
+    titleCompactSize: "clamp(2.2rem, 7vw, 3rem)"
   },
   {
-    size: "clamp(290px, 77vw, 640px)",
-    top: "clamp(106px, 13vh, 204px)",
-    right: "clamp(-44px, -10vw, -10px)",
-    copyBottom: "clamp(300px, 37vh, 450px)",
-    copyMax: "min(92vw, 780px)",
-    titleSize: "clamp(2.75rem, 8.8vw, 4.5rem)",
-    titleCompactSize: "clamp(2.45rem, 7.2vw, 3.8rem)"
+    size: "clamp(230px, 62vw, 320px)",
+    top: "112px",
+    right: "-26px",
+    copyBottom: "248px",
+    copyMax: "min(79vw, 346px)",
+    titleSize: "clamp(2.35rem, 7.4vw, 3.2rem)",
+    titleCompactSize: "clamp(2.08rem, 6.7vw, 2.85rem)"
   },
   {
-    size: "clamp(250px, 68vw, 560px)",
-    top: "clamp(66px, 8.8vh, 126px)",
-    right: "clamp(-12px, -2vw, 20px)",
-    copyBottom: "clamp(292px, 36vh, 430px)",
-    copyMax: "min(90vw, 740px)",
-    titleSize: "clamp(2.75rem, 8.4vw, 4.5rem)",
-    titleCompactSize: "clamp(2.4rem, 6.9vw, 3.7rem)"
+    size: "clamp(205px, 56vw, 286px)",
+    top: "76px",
+    right: "2px",
+    copyBottom: "258px",
+    copyMax: "min(78vw, 338px)",
+    titleSize: "clamp(2.35rem, 7.5vw, 3.2rem)",
+    titleCompactSize: "clamp(2.08rem, 6.7vw, 2.85rem)"
   },
   {
-    size: "clamp(300px, 79vw, 650px)",
-    top: "clamp(74px, 10.2vh, 146px)",
-    right: "clamp(-30px, -7vw, 6px)",
-    copyBottom: "clamp(284px, 35vh, 420px)",
-    copyMax: "min(92vw, 780px)",
-    titleSize: "clamp(2.75rem, 8.6vw, 4.6rem)",
-    titleCompactSize: "clamp(2.5rem, 7.3vw, 3.9rem)"
+    size: "clamp(238px, 64vw, 332px)",
+    top: "84px",
+    right: "-22px",
+    copyBottom: "244px",
+    copyMax: "min(79vw, 350px)",
+    titleSize: "clamp(2.35rem, 7.5vw, 3.2rem)",
+    titleCompactSize: "clamp(2.1rem, 6.8vw, 2.9rem)"
   }
 ];
 
