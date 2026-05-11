@@ -382,6 +382,50 @@ input {
   display: inline-block;
 }
 
+.onboarding-celebration {
+  min-height: 100dvh;
+  position: relative;
+  padding-top: 0;
+}
+
+.onboarding-celebration-stars {
+  position: absolute;
+  top: clamp(72px, 24vw, 104px);
+  right: clamp(40px, 14vw, 63px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(8px, 4vw, 18px);
+}
+
+.onboarding-celebration-stars img {
+  width: clamp(64px, 20vw, 88px);
+  height: auto;
+  display: block;
+}
+
+.onboarding-celebration-copy {
+  position: absolute;
+  left: clamp(24px, 10vw, 42px);
+  right: clamp(24px, 12vw, 63px);
+  bottom: clamp(48px, 17vw, 73px);
+}
+
+.onboarding-celebration-title {
+  font-size: clamp(4.5rem, 22vw, 7.5rem);
+  line-height: 0.95;
+  color: var(--app-primary);
+  margin: 0 0 clamp(16px, 5vw, 28px);
+}
+
+.onboarding-celebration-text {
+  font-size: clamp(1.15rem, 4vw, 1.4rem);
+  line-height: 1.2;
+  color: var(--app-text-main);
+  margin: 0;
+  white-space: pre-line;
+}
+
 @media (min-width: 900px) {
   .page {
     padding-inline: 24px;

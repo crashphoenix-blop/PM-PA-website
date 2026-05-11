@@ -1,110 +1,79 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { onboardingSteps } from "@/shared/lib/constants";
 import { sessionStorageService } from "@/shared/lib/storage";
 import { trackEvent } from "@/shared/analytics/tracker";
+import type { CSSProperties } from "react";
 
-const DESIGN_WIDTH = 430;
-const scale = (n: number) => `min(${n}px, calc(${n} / ${DESIGN_WIDTH} * 100vw))`;
-
-type Controls = "first" | "middle" | "last" | "celebration";
-
-type StepLayout = {
-  imageSrc: string;
-  imageWidth: number;
-  imageHeight: number;
-  imageTop: number;
-  imageRight: number;
-  imageOpacity: number;
-  titleSize: number;
-  descriptionSize: number;
-  copyBottom: number;
-  copyLeft: number;
-  copyRight: number;
-  controls: Controls;
-};
-
-const LAYOUTS: StepLayout[] = [
+const FIGURE_LAYOUT: Array<{
+  size: string;
+  top: string;
+  right: string;
+  copyBottom: string;
+  copyMax: string;
+  titleSize: string;
+  titleCompactSize: string;
+}> = [
   {
-    imageSrc: "/assets/wewewe.svg",
-    imageWidth: 294,
-    imageHeight: 363,
-    imageTop: 137,
-    imageRight: 0,
-    imageOpacity: 0.6,
-    titleSize: 36,
-    descriptionSize: 0,
-    copyBottom: 219,
-    copyLeft: 33,
-    copyRight: 33,
-    controls: "first"
+    size: "clamp(190px, 50vw, 252px)",
+    top: "74px",
+    right: "-8px",
+    copyBottom: "198px",
+    copyMax: "min(86vw, 348px)",
+    titleSize: "clamp(2.22rem, 7.3vw, 3rem)",
+    titleCompactSize: "clamp(2rem, 6.5vw, 2.72rem)"
   },
   {
-    imageSrc: "/assets/star4.svg",
-    imageWidth: 344,
-    imageHeight: 510,
-    imageTop: 84,
-    imageRight: 0,
-    imageOpacity: 0.65,
-    titleSize: 36,
-    descriptionSize: 18,
-    copyBottom: 178,
-    copyLeft: 33,
-    copyRight: 33,
-    controls: "middle"
+    size: "clamp(208px, 56vw, 278px)",
+    top: "146px",
+    right: "-18px",
+    copyBottom: "172px",
+    copyMax: "min(86vw, 352px)",
+    titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
+    titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
   },
   {
-    imageSrc: "/assets/tree.svg",
-    imageWidth: 289,
-    imageHeight: 498,
-    imageTop: 87,
-    imageRight: 0,
-    imageOpacity: 0.65,
-    titleSize: 36,
-    descriptionSize: 18,
-    copyBottom: 223,
-    copyLeft: 33,
-    copyRight: 33,
-    controls: "middle"
+    size: "clamp(180px, 49vw, 242px)",
+    top: "92px",
+    right: "18px",
+    copyBottom: "184px",
+    copyMax: "min(84vw, 344px)",
+    titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
+    titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
   },
   {
-    imageSrc: "/assets/ellipse.svg",
-    imageWidth: 328,
-    imageHeight: 496,
-    imageTop: 84,
-    imageRight: 0,
-    imageOpacity: 0.65,
-    titleSize: 36,
-    descriptionSize: 18,
-    copyBottom: 130,
-    copyLeft: 33,
-    copyRight: 33,
-    controls: "last"
-  },
-  {
-    imageSrc: "/assets/star.svg",
-    imageWidth: 88,
-    imageHeight: 220,
-    imageTop: 104,
-    imageRight: 63,
-    imageOpacity: 1,
-    titleSize: 96,
-    descriptionSize: 21,
-    copyBottom: 73,
-    copyLeft: 42,
-    copyRight: 63,
-    controls: "celebration"
+    size: "clamp(214px, 58vw, 286px)",
+    top: "102px",
+    right: "-8px",
+    copyBottom: "168px",
+    copyMax: "min(86vw, 356px)",
+    titleSize: "clamp(2.18rem, 7.1vw, 3rem)",
+    titleCompactSize: "clamp(2rem, 6.3vw, 2.72rem)"
   }
 ];
+
+const CELEBRATION_INDEX = 4;
+const CELEBRATION_DELAY_MS = 2500;
 
 export function OnboardingScreen() {
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const step = onboardingSteps[index];
-  const layout = LAYOUTS[index] ?? LAYOUTS[0];
+  const isCelebration = index === CELEBRATION_INDEX;
+  const isLast = !isCelebration && index === onboardingSteps.length - 2;
+  const figureLayout = FIGURE_LAYOUT[index] ?? FIGURE_LAYOUT[0];
+  const figureStyle = {
+    "--figure-size": figureLayout.size,
+    "--figure-top": figureLayout.top,
+    "--figure-right": figureLayout.right,
+    "--copy-bottom": figureLayout.copyBottom,
+    "--copy-max": figureLayout.copyMax,
+    "--title-size-mobile": figureLayout.titleSize,
+    "--title-size-compact-mobile": figureLayout.titleCompactSize
+  } as CSSProperties;
 
   const finish = () => {
     sessionStorageService.setOnboardingCompleted(true);
@@ -112,141 +81,87 @@ export function OnboardingScreen() {
     router.push("/feed");
   };
 
+  const goToCelebration = () => setIndex(CELEBRATION_INDEX);
+
   useEffect(() => {
-    if (layout.controls !== "celebration") return;
-    const timer = window.setTimeout(finish, 2500);
+    if (!isCelebration) return;
+    const timer = window.setTimeout(finish, CELEBRATION_DELAY_MS);
     return () => window.clearTimeout(timer);
-  }, [layout.controls]);
+  }, [isCelebration]);
 
-  const figureStyle: CSSProperties = {
-    position: "absolute",
-    top: scale(layout.imageTop),
-    right: scale(layout.imageRight),
-    width: scale(layout.imageWidth),
-    height: scale(layout.imageHeight),
-    opacity: layout.imageOpacity,
-    pointerEvents: "none"
-  };
-
-  const copyStyle: CSSProperties = {
-    position: "absolute",
-    bottom: scale(layout.copyBottom),
-    left: scale(layout.copyLeft),
-    right: scale(layout.copyRight)
-  };
-
-  const titleStyle: CSSProperties = {
-    fontSize: scale(layout.titleSize),
-    lineHeight: 1.02,
-    color: "var(--app-primary)",
-    margin: 0,
-    marginBottom: layout.descriptionSize > 0 ? scale(layout.controls === "celebration" ? 24 : 12) : 0
-  };
-
-  const descStyle: CSSProperties = {
-    fontSize: scale(layout.descriptionSize),
-    lineHeight: 1.32,
-    color: layout.controls === "celebration" ? "var(--app-text-main)" : "var(--app-primary)",
-    margin: 0,
-    whiteSpace: "pre-line"
-  };
-
-  const renderFigure = () => {
-    if (layout.controls === "celebration") {
-      return (
-        <div style={figureStyle}>
-          <Image
-            src="/assets/star_brown.svg"
-            alt=""
-            width={88}
-            height={100}
-            style={{ display: "block", width: "100%", height: "auto" }}
-          />
-          <Image
-            src="/assets/star.svg"
-            alt=""
-            width={88}
-            height={100}
-            style={{ display: "block", width: "100%", height: "auto", marginTop: scale(20) }}
-          />
-        </div>
-      );
-    }
+  if (isCelebration) {
     return (
-      <Image
-        src={layout.imageSrc}
-        alt=""
-        width={layout.imageWidth}
-        height={layout.imageHeight}
-        style={figureStyle}
-      />
-    );
-  };
-
-  const renderControls = () => {
-    if (layout.controls === "celebration") return null;
-
-    if (layout.controls === "last") {
-      return (
-        <div className="onboarding-footer">
-          <div className="onboarding-footer-inner" style={{ display: "flex", justifyContent: "center" }}>
-            <button
-              className="primary-button"
-              onClick={finish}
-              style={{ minWidth: scale(216) }}
-            >
-              в приложение
-            </button>
+      <main className="page">
+        <div className="content-width onboarding-shell onboarding-celebration">
+          <div className="onboarding-celebration-stars" aria-hidden>
+            <Image src="/assets/star_brown.svg" alt="" width={88} height={100} />
+            <Image src="/assets/star.svg" alt="" width={88} height={100} />
+          </div>
+          <div className="onboarding-celebration-copy">
+            <h1 className="miama onboarding-celebration-title">{step.title}</h1>
+            {step.description ? (
+              <p className="onboarding-celebration-text">{step.description}</p>
+            ) : null}
           </div>
         </div>
-      );
-    }
-
-    const showBack = layout.controls === "middle";
-    return (
-      <div className="onboarding-footer">
-        <div className="onboarding-footer-inner">
-          <div className="onboarding-actions">
-            <button className="secondary-button onboarding-skip" onClick={finish}>
-              пропустить
-            </button>
-            <div className="onboarding-nav">
-              {showBack ? (
-                <button
-                  className="round-button"
-                  onClick={() => setIndex((prev) => Math.max(prev - 1, 0))}
-                  aria-label="Назад"
-                >
-                  ←
-                </button>
-              ) : null}
-              <button
-                className="round-button"
-                onClick={() =>
-                  setIndex((prev) => Math.min(prev + 1, onboardingSteps.length - 1))
-                }
-                aria-label="Далее"
-              >
-                →
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      </main>
     );
-  };
+  }
 
   return (
     <main className="page">
       <div className="content-width onboarding-shell">
-        {renderFigure()}
-        <div style={copyStyle}>
-          <h1 className="miama" style={titleStyle}>
-            {step.title}
-          </h1>
-          {step.description ? <p style={descStyle}>{step.description}</p> : null}
+        <Image src={step.image} alt="" width={320} height={320} className="onboarding-figure" style={figureStyle} />
+        <div className="onboarding-copy">
+          <h1 className={`miama onboarding-title${step.description ? " onboarding-title-compact" : ""}`}>{step.title}</h1>
+          {step.description ? <p className="onboarding-text">{step.description}</p> : null}
         </div>
-        {renderControls()}
+
+        <div className="onboarding-footer">
+          <div className="onboarding-footer-inner">
+            <div className="onboarding-actions">
+              {!isLast ? (
+                <button className="secondary-button onboarding-skip" onClick={finish}>
+                  пропустить
+                </button>
+              ) : (
+                <span />
+              )}
+              {!isLast ? (
+                <div className="onboarding-nav">
+                  {index > 0 ? (
+                    <button className="round-button" onClick={() => setIndex((prev) => prev - 1)}>
+                      ←
+                    </button>
+                  ) : null}
+                  <button
+                    className="round-button"
+                    onClick={() =>
+                      setIndex((prev) =>
+                        Math.min(prev + 1, onboardingSteps.length - 2)
+                      )
+                    }
+                  >
+                    →
+                  </button>
+                </div>
+              ) : (
+                <button className="primary-button" onClick={goToCelebration}>
+                  в приложение
+                </button>
+              )}
+            </div>
+            <div className="onboarding-dots">
+              {onboardingSteps.slice(0, CELEBRATION_INDEX).map((_, dotIndex) => (
+                <span
+                  key={dotIndex}
+                  className="onboarding-dot"
+                  style={{ background: dotIndex === index ? "var(--app-primary)" : "var(--app-secondary)" }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );
