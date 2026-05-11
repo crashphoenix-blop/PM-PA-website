@@ -31,5 +31,10 @@ export const onboardingSteps = [
     description:
       "Наше приложение – это экосистема, в которой вы можете находиться в постоянном диалоге с новыми брендами и узнавать о российском сообществе еще больше и делиться идеями с друзьями!",
     image: "/assets/ellipse.svg"
+  },
+  {
+    title: "Ура!",
+    description: "бегом выбирать\nподарки",
+    image: "/assets/star.svg"
   }
 ] as const;
