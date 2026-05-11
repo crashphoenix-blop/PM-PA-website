@@ -100,7 +100,7 @@ export function OnboardingScreen() {
           <div className="onboarding-celebration-copy">
             <h1 className="miama onboarding-celebration-title">{step.title}</h1>
             {step.description ? (
-              <p className="onboarding-celebration-text">{step.description}</p>
+              <p className="miama onboarding-celebration-text">{step.description}</p>
             ) : null}
           </div>
         </div>
@@ -119,15 +119,17 @@ export function OnboardingScreen() {
 
         <div className="onboarding-footer">
           <div className="onboarding-footer-inner">
-            <div className="onboarding-actions">
-              {!isLast ? (
+            {isLast ? (
+              <div className="onboarding-actions onboarding-actions-cta">
+                <button className="primary-button" onClick={goToCelebration}>
+                  в приложение
+                </button>
+              </div>
+            ) : (
+              <div className="onboarding-actions">
                 <button className="secondary-button onboarding-skip" onClick={finish}>
                   пропустить
                 </button>
-              ) : (
-                <span />
-              )}
-              {!isLast ? (
                 <div className="onboarding-nav">
                   {index > 0 ? (
                     <button className="round-button" onClick={() => setIndex((prev) => prev - 1)}>
@@ -145,12 +147,8 @@ export function OnboardingScreen() {
                     →
                   </button>
                 </div>
-              ) : (
-                <button className="primary-button" onClick={goToCelebration}>
-                  в приложение
-                </button>
-              )}
-            </div>
+              </div>
+            )}
             <div className="onboarding-dots">
               {onboardingSteps.slice(0, CELEBRATION_INDEX).map((_, dotIndex) => (
                 <span

@@ -356,6 +356,14 @@ input {
   gap: 12px;
 }
 
+.onboarding-actions-cta {
+  justify-content: center;
+}
+
+.onboarding-actions-cta .primary-button {
+  min-width: 216px;
+}
+
 .onboarding-skip {
   font-size: 11px;
   min-height: 31px;
@@ -415,13 +423,13 @@ input {
   font-size: clamp(4.5rem, 22vw, 7.5rem);
   line-height: 0.95;
   color: var(--app-primary);
-  margin: 0 0 clamp(16px, 5vw, 28px);
+  margin: 0 0 clamp(28px, 8vw, 48px);
 }
 
 .onboarding-celebration-text {
-  font-size: clamp(1.15rem, 4vw, 1.4rem);
-  line-height: 1.2;
-  color: var(--app-text-main);
+  font-size: clamp(1.6rem, 7vw, 2.4rem);
+  line-height: 1.18;
+  color: var(--app-primary);
   margin: 0;
   white-space: pre-line;
 }
