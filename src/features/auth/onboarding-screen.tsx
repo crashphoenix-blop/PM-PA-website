@@ -18,38 +18,38 @@ const FIGURE_LAYOUT: Array<{
   titleCompactSize: string;
 }> = [
   {
-    size: "clamp(190px, 50vw, 252px)",
-    top: "74px",
-    right: "-8px",
-    copyBottom: "198px",
-    copyMax: "min(86vw, 348px)",
+    size: "clamp(260px, 75vw, 340px)",
+    top: "110px",
+    right: "0px",
+    copyBottom: "210px",
+    copyMax: "min(86vw, 360px)",
     titleSize: "clamp(2.22rem, 7.3vw, 3rem)",
     titleCompactSize: "clamp(2rem, 6.5vw, 2.72rem)"
   },
   {
-    size: "clamp(208px, 56vw, 278px)",
-    top: "146px",
-    right: "-18px",
-    copyBottom: "172px",
-    copyMax: "min(86vw, 352px)",
+    size: "clamp(290px, 80vw, 360px)",
+    top: "105px",
+    right: "-24px",
+    copyBottom: "165px",
+    copyMax: "min(86vw, 360px)",
     titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
     titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
   },
   {
-    size: "clamp(180px, 49vw, 242px)",
-    top: "92px",
-    right: "18px",
-    copyBottom: "184px",
-    copyMax: "min(84vw, 344px)",
+    size: "clamp(240px, 68vw, 300px)",
+    top: "95px",
+    right: "8px",
+    copyBottom: "175px",
+    copyMax: "min(84vw, 348px)",
     titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
     titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
   },
   {
-    size: "clamp(214px, 58vw, 286px)",
-    top: "102px",
-    right: "-8px",
-    copyBottom: "168px",
-    copyMax: "min(86vw, 356px)",
+    size: "clamp(290px, 82vw, 360px)",
+    top: "120px",
+    right: "0px",
+    copyBottom: "150px",
+    copyMax: "min(86vw, 360px)",
     titleSize: "clamp(2.18rem, 7.1vw, 3rem)",
     titleCompactSize: "clamp(2rem, 6.3vw, 2.72rem)"
   }
