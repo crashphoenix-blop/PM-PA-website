@@ -49,10 +49,11 @@ export function FavoritesScreen() {
         <h1 className="miama page-title">Нравится!</h1>
         {loading ? <p style={{ marginTop: 24 }}>Загрузка...</p> : null}
         {error ? <p style={{ color: "crimson", marginTop: 16 }}>{error}</p> : null}
-        {!loading && items.length === 0 ? (
-          <p className="miama screen-subtitle" style={{ marginTop: 32, whiteSpace: "pre-line" }}>
-            {"Ай!\nВ избранном пока пусто"}
-          </p>
+        {!loading && !error && items.length === 0 ? (
+          <div className="state-banner">
+            <h2 className="miama state-banner-title">Ай!</h2>
+            <p className="state-banner-text">В избранном пока пусто</p>
+          </div>
         ) : null}
 
         <section className="gift-grid" style={{ marginTop: 16 }}>

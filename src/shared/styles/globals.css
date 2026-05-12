@@ -426,6 +426,35 @@ input {
   margin: 0 0 clamp(28px, 8vw, 48px);
 }
 
+.state-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(8px, 2.5vw, 14px);
+  padding: clamp(48px, 16vw, 96px) 16px clamp(24px, 8vw, 48px);
+}
+
+.state-banner-title {
+  font-size: clamp(3.4rem, 16vw, 5.5rem);
+  line-height: 0.95;
+  color: var(--app-primary);
+  margin: 0;
+}
+
+.state-banner-text {
+  font-size: clamp(1.05rem, 4vw, 1.3rem);
+  line-height: 1.25;
+  color: var(--app-text-main);
+  margin: 0;
+  max-width: 320px;
+  white-space: pre-line;
+}
+
+.state-banner-action {
+  margin-top: clamp(20px, 6vw, 40px);
+}
+
 .onboarding-celebration-text {
   font-size: clamp(1.6rem, 7vw, 2.4rem);
   line-height: 1.18;

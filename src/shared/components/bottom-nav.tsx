@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 const items = [
   { href: "/feed", icon: "/assets/home.svg", label: "Лента" },
-  { href: "/favorites", icon: "/assets/heart.svg", label: "Избранное" },
+  { href: "/favorites", icon: "/assets/heart-nav.svg", label: "Избранное" },
   { href: "/profile", icon: "/assets/profile.svg", label: "Профиль" }
 ];
 
@@ -23,10 +23,15 @@ export function BottomNav() {
             type="button"
             className="tabbar-button"
             onClick={() => router.push(item.href)}
-            style={{ color: active ? "var(--app-primary)" : "var(--app-background)" }}
             aria-label={item.label}
           >
-            <Image src={item.icon} alt={item.label} width={27} height={27} />
+            <Image
+              src={item.icon}
+              alt={item.label}
+              width={27}
+              height={27}
+              style={{ opacity: active ? 1 : 0.35 }}
+            />
           </button>
         );
       })}
