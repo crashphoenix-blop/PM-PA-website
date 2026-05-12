@@ -308,7 +308,7 @@ input {
   position: absolute;
   left: clamp(16px, 4vw, 24px);
   right: clamp(16px, 4vw, 24px);
-  bottom: var(--copy-bottom, clamp(166px, 24vw, 230px));
+  top: var(--copy-top, clamp(360px, 62svh, 580px));
   max-width: var(--copy-max, min(86vw, 350px));
   z-index: 2;
 }
@@ -398,8 +398,8 @@ input {
 
 .onboarding-celebration-stars {
   position: absolute;
-  top: clamp(72px, 24vw, 104px);
-  right: clamp(40px, 14vw, 63px);
+  top: clamp(72px, 11.2svh, 104px);
+  right: clamp(40px, 14.9vw, 64px);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -415,8 +415,8 @@ input {
 .onboarding-celebration-copy {
   position: absolute;
   left: clamp(24px, 10vw, 42px);
-  right: clamp(24px, 12vw, 63px);
-  bottom: clamp(48px, 17vw, 73px);
+  right: clamp(24px, 14.9vw, 64px);
+  top: clamp(220px, 32.6svh, 304px);
 }
 
 .onboarding-celebration-title {
@@ -559,7 +559,7 @@ input {
     position: static;
     left: auto;
     right: auto;
-    bottom: auto;
+    top: auto;
     max-width: min(70vw, 760px);
   }
 

@@ -12,44 +12,48 @@ const FIGURE_LAYOUT: Array<{
   size: string;
   top: string;
   right: string;
-  copyBottom: string;
+  copyTop: string;
   copyMax: string;
   titleSize: string;
   titleCompactSize: string;
 }> = [
   {
-    size: "clamp(260px, 75vw, 340px)",
-    top: "110px",
+    // Step 1: wewewe.svg — 344/430=80% wide, copy at 63.7% down
+    size: "clamp(260px, 80vw, 344px)",
+    top: "clamp(50px, 9svh, 84px)",
     right: "0px",
-    copyBottom: "210px",
-    copyMax: "min(86vw, 360px)",
+    copyTop: "clamp(380px, 63.7svh, 594px)",
+    copyMax: "min(84vw, 360px)",
     titleSize: "clamp(2.22rem, 7.3vw, 3rem)",
     titleCompactSize: "clamp(2rem, 6.5vw, 2.72rem)"
   },
   {
-    size: "clamp(290px, 80vw, 360px)",
-    top: "105px",
-    right: "-24px",
-    copyBottom: "165px",
-    copyMax: "min(86vw, 360px)",
-    titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
-    titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
-  },
-  {
-    size: "clamp(240px, 68vw, 300px)",
-    top: "95px",
-    right: "8px",
-    copyBottom: "175px",
+    // Step 2: star4.svg — 328/430=76% wide, copy at 61.8% down
+    size: "clamp(250px, 76vw, 328px)",
+    top: "clamp(50px, 9svh, 84px)",
+    right: "0px",
+    copyTop: "clamp(350px, 61.8svh, 576px)",
     copyMax: "min(84vw, 348px)",
     titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
     titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
   },
   {
-    size: "clamp(290px, 82vw, 360px)",
-    top: "120px",
+    // Step 3: tree.svg — 294/430=68% wide, top bar 137px, copy at 76.5% down
+    size: "clamp(230px, 68vw, 294px)",
+    top: "clamp(90px, 14.7svh, 137px)",
     right: "0px",
-    copyBottom: "150px",
-    copyMax: "min(86vw, 360px)",
+    copyTop: "clamp(440px, 76.5svh, 713px)",
+    copyMax: "min(84vw, 348px)",
+    titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
+    titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
+  },
+  {
+    // Step 4: ellipse.svg — 291/430=68% wide, copy at 76.1% down
+    size: "clamp(230px, 68vw, 291px)",
+    top: "clamp(55px, 9.3svh, 87px)",
+    right: "0px",
+    copyTop: "clamp(440px, 76svh, 709px)",
+    copyMax: "min(84vw, 348px)",
     titleSize: "clamp(2.18rem, 7.1vw, 3rem)",
     titleCompactSize: "clamp(2rem, 6.3vw, 2.72rem)"
   }
@@ -69,7 +73,7 @@ export function OnboardingScreen() {
     "--figure-size": figureLayout.size,
     "--figure-top": figureLayout.top,
     "--figure-right": figureLayout.right,
-    "--copy-bottom": figureLayout.copyBottom,
+    "--copy-top": figureLayout.copyTop,
     "--copy-max": figureLayout.copyMax,
     "--title-size-mobile": figureLayout.titleSize,
     "--title-size-compact-mobile": figureLayout.titleCompactSize
