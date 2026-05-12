@@ -455,6 +455,74 @@ input {
   margin-top: clamp(20px, 6vw, 40px);
 }
 
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(82, 65, 65, 0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+}
+
+.confirm-card {
+  position: relative;
+  background: var(--app-white);
+  border-radius: 24px;
+  padding: 28px 24px 24px;
+  width: min(100%, 340px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+}
+
+.confirm-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--app-primary);
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.confirm-title {
+  font-size: clamp(2rem, 8vw, 2.6rem);
+  line-height: 1;
+  color: var(--app-primary);
+  margin: 0 0 14px;
+}
+
+.confirm-text {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--app-text-main);
+  margin: 0 0 20px;
+}
+
+.confirm-cta {
+  border: 1.5px solid var(--app-primary);
+  background: transparent;
+  color: var(--app-primary);
+  font-size: 20px;
+  min-height: 48px;
+  border-radius: var(--radius-button);
+  padding: 0 36px;
+  min-width: 160px;
+  cursor: pointer;
+}
+
+.confirm-cta:hover {
+  background: var(--app-primary);
+  color: var(--app-on-dark, var(--app-text-secondary));
+}
+
 .onboarding-celebration-text {
   font-size: clamp(1.6rem, 7vw, 2.4rem);
   line-height: 1.18;

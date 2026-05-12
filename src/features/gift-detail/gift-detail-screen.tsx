@@ -16,6 +16,7 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -134,10 +135,7 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
             type="button"
             className="primary-button"
             style={{ width: 200 }}
-            onClick={() => {
-              void trackEvent("purchase_click", { gift_id: gift.id, surface: "gift_detail" });
-              if (gift.store_url) window.open(gift.store_url, "_blank", "noopener,noreferrer");
-            }}
+            onClick={() => setConfirmOpen(true)}
           >
             к продавцу
           </button>
@@ -160,6 +158,44 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
           </button>
         </div>
       </div>
+
+      {confirmOpen ? (
+        <div
+          className="confirm-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="confirm-title"
+          onClick={() => setConfirmOpen(false)}
+        >
+          <div className="confirm-card" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="confirm-close"
+              aria-label="Закрыть"
+              onClick={() => setConfirmOpen(false)}
+            >
+              ×
+            </button>
+            <h2 id="confirm-title" className="miama confirm-title">
+              Внимание!
+            </h2>
+            <p className="confirm-text">
+              Покупка происходит в магазине бренда. Если вы согласны перейти на сторонний сайт, нажмите «перейти»
+            </p>
+            <button
+              type="button"
+              className="confirm-cta"
+              onClick={() => {
+                void trackEvent("purchase_click", { gift_id: gift.id, surface: "gift_detail" });
+                if (gift.store_url) window.open(gift.store_url, "_blank", "noopener,noreferrer");
+                setConfirmOpen(false);
+              }}
+            >
+              перейти
+            </button>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }
