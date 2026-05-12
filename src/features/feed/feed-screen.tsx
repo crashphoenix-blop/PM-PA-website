@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiClient } from "@/shared/api/client";
 import type { Category, Gift } from "@/shared/api/types";
@@ -52,35 +52,32 @@ export function FeedScreen() {
   );
   const categoryTitles = useMemo(() => ["все", ...visibleCategories.map((item) => item.name)], [visibleCategories]);
 
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      try {
-        setLoading(true);
-        await syncFavoritesFromServer();
-        const [categories, recommended, all] = await Promise.all([
-          apiClient.getCategories(),
-          apiClient.getRecommendedGifts(),
-          apiClient.getAllGifts()
-        ]);
-        const allGifts = all.gifts.length > 0 ? all.gifts : recommended.gifts;
-        if (!active) return;
-        setState({
-          gifts: allGifts,
-          allGifts,
-          categories
-        });
-      } catch (loadError) {
-        if (!active) return;
-        setError(loadError instanceof Error ? loadError.message : "Не удалось загрузить подарки");
-      } finally {
-        if (active) setLoading(false);
-      }
-    })();
-    return () => {
-      active = false;
-    };
+  const load = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await syncFavoritesFromServer();
+      const [categories, recommended, all] = await Promise.all([
+        apiClient.getCategories(),
+        apiClient.getRecommendedGifts(),
+        apiClient.getAllGifts()
+      ]);
+      const allGifts = all.gifts.length > 0 ? all.gifts : recommended.gifts;
+      setState({
+        gifts: allGifts,
+        allGifts,
+        categories
+      });
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : "Не удалось загрузить подарки");
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const onSelectCategory = (index: number) => {
     const nextQuery = searchQuery;
@@ -145,19 +142,44 @@ export function FeedScreen() {
         </div>
 
         {loading ? <p style={{ marginTop: 24 }}>Загрузка...</p> : null}
-        {error ? <p style={{ color: "crimson", marginTop: 16 }}>{error}</p> : null}
-        {!loading && state.gifts.length === 0 ? <p style={{ marginTop: 24 }}>Подарков пока нет</p> : null}
 
-        <section className="gift-grid" style={{ marginTop: 12 }}>
-          {state.gifts.map((gift) => (
-            <GiftCard
-              key={gift.id}
-              gift={gift}
-              onOpen={() => router.push(`/gift/${gift.id}`)}
-              onToggleFavorite={() => void onToggleFavorite(gift.id)}
-            />
-          ))}
-        </section>
+        {!loading && error ? (
+          <div className="state-banner">
+            <h2 className="miama state-banner-title">Ой!</h2>
+            <p className="state-banner-text">Нет интернета</p>
+            <button
+              type="button"
+              className="primary-button state-banner-action"
+              onClick={() => void load()}
+            >
+              перезагрузить
+            </button>
+          </div>
+        ) : null}
+
+        {!loading && !error && state.gifts.length === 0 ? (
+          <div className="state-banner">
+            <h2 className="miama state-banner-title">Упс!</h2>
+            <p className="state-banner-text">
+              {searchQuery || selectedCategory > 0
+                ? "Результатов не найдено,\nпоищите что-то другое"
+                : "Подарков пока нет"}
+            </p>
+          </div>
+        ) : null}
+
+        {!loading && !error && state.gifts.length > 0 ? (
+          <section className="gift-grid" style={{ marginTop: 12 }}>
+            {state.gifts.map((gift) => (
+              <GiftCard
+                key={gift.id}
+                gift={gift}
+                onOpen={() => router.push(`/gift/${gift.id}`)}
+                onToggleFavorite={() => void onToggleFavorite(gift.id)}
+              />
+            ))}
+          </section>
+        ) : null}
       </div>
     </main>
   );
