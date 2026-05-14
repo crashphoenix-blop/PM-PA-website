@@ -291,6 +291,9 @@ input {
   position: relative;
   padding-top: 0;
   overflow: hidden;
+  margin: -20px -16px 0;
+  width: auto;
+  max-width: none;
 }
 
 .onboarding-figure {
@@ -545,6 +548,9 @@ input {
   }
 
   .onboarding-shell {
+    margin: 0 auto;
+    width: min(100%, 1120px);
+    max-width: 1120px;
     padding-top: clamp(88px, 14vh, 118px);
     overflow: visible;
   }

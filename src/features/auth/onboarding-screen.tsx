@@ -42,7 +42,7 @@ const FIGURE_LAYOUT: Array<{
     size: "clamp(230px, 68vw, 294px)",
     top: "clamp(90px, 14.7svh, 137px)",
     right: "0px",
-    copyTop: "clamp(440px, 76.5svh, 713px)",
+    copyTop: "clamp(420px, 75svh, 713px)",
     copyMax: "min(84vw, 348px)",
     titleSize: "clamp(2.18rem, 7.1vw, 2.95rem)",
     titleCompactSize: "clamp(1.98rem, 6.2vw, 2.65rem)"
@@ -52,7 +52,7 @@ const FIGURE_LAYOUT: Array<{
     size: "clamp(230px, 68vw, 291px)",
     top: "clamp(55px, 9.3svh, 87px)",
     right: "0px",
-    copyTop: "clamp(440px, 76svh, 709px)",
+    copyTop: "clamp(420px, 63svh, 620px)",
     copyMax: "min(84vw, 348px)",
     titleSize: "clamp(2.18rem, 7.1vw, 3rem)",
     titleCompactSize: "clamp(2rem, 6.3vw, 2.72rem)"
@@ -114,8 +114,8 @@ export function OnboardingScreen() {
 
   return (
     <main className="page">
-      <div className="content-width onboarding-shell">
-        <Image src={step.image} alt="" width={320} height={320} className="onboarding-figure" style={figureStyle} />
+      <div className="content-width onboarding-shell" style={figureStyle}>
+        <Image src={step.image} alt="" width={320} height={320} className="onboarding-figure" />
         <div className="onboarding-copy">
           <h1 className={`miama onboarding-title${step.description ? " onboarding-title-compact" : ""}`}>{step.title}</h1>
           {step.description ? <p className="onboarding-text">{step.description}</p> : null}
