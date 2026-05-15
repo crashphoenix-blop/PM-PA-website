@@ -21,7 +21,7 @@ const FIGURE_LAYOUT: Array<{
     // Step 1: wewewe.svg — 344/430=80% wide, copy at 63.7% down
     size: "clamp(260px, 80vw, 344px)",
     top: "clamp(50px, 9svh, 84px)",
-    right: "-40px",
+    right: "-65px",
     copyTop: "clamp(380px, 63.7svh, 594px)",
     copyMax: "min(84vw, 360px)",
     titleSize: "clamp(2.22rem, 7.3vw, 3rem)",
@@ -51,7 +51,7 @@ const FIGURE_LAYOUT: Array<{
     // Step 4: ellipse.svg — 291/430=68% wide, copy at 76.1% down
     size: "clamp(230px, 68vw, 291px)",
     top: "clamp(55px, 9.3svh, 87px)",
-    right: "0px",
+    right: "-45px",
     copyTop: "clamp(420px, 63svh, 620px)",
     copyMax: "min(84vw, 348px)",
     titleSize: "clamp(2.18rem, 7.1vw, 3rem)",
