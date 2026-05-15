@@ -21,7 +21,7 @@ const FIGURE_LAYOUT: Array<{
     // Step 1: wewewe.svg — 344/430=80% wide, copy at 63.7% down
     size: "clamp(260px, 80vw, 344px)",
     top: "clamp(50px, 9svh, 84px)",
-    right: "20px",
+    right: "-20px",
     copyTop: "clamp(380px, 63.7svh, 594px)",
     copyMax: "min(84vw, 360px)",
     titleSize: "clamp(2.22rem, 7.3vw, 3rem)",
