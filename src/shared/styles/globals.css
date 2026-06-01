@@ -595,3 +595,126 @@ input {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 20px;
+  padding: 8px 14px;
+  background: var(--app-secondary);
+  color: var(--app-text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.chip-active {
+  outline: 2px solid var(--app-primary);
+}
+
+.admin-gifts-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.admin-gifts-nav__link {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--app-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.admin-gifts-nav__link--active {
+  background: var(--app-secondary);
+  color: var(--app-text-secondary);
+}
+
+.admin-candidates__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.admin-candidates__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.admin-candidates__danger {
+  background: #8b4545;
+  color: #fff;
+}
+
+.admin-candidates__success {
+  margin: 0 0 12px;
+  color: var(--app-primary);
+  font-size: 0.95rem;
+}
+
+.admin-candidates__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.admin-candidates__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-candidates-grid .admin-candidate-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-candidate-item__panel {
+  padding: 0 4px 8px;
+}
+
+.admin-candidate-item__note {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--app-primary);
+}
+
+.admin-candidate-item__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-candidate-item__buttons .primary-button,
+.admin-candidate-item__buttons .secondary-button {
+  flex: 1;
+  min-width: 120px;
+  min-height: 44px;
+  font-size: 0.95rem;
+}
+
+.admin-candidate-card__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 900px) {
+  .admin-candidates__header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { AdminGiftsNav } from "@/features/admin/admin-gifts-nav";
 import { useAuth } from "@/features/auth/auth-context";
 import { apiClient, resolveApiAssetUrl } from "@/shared/api/client";
 import type { Category } from "@/shared/api/types";
@@ -134,9 +135,8 @@ export function AdminCreateGiftScreen() {
   return (
     <main className="page">
       <div className="content-width" style={{ maxWidth: 720, paddingBottom: 140 }}>
-        <h1 className="miama" style={{ color: "var(--app-primary)", fontSize: 36 }}>
-          Добавить подарок
-        </h1>
+        <AdminGiftsNav />
+        <h1 className="miama page-title">Добавить подарок</h1>
         <p style={{ marginBottom: 20 }}>Заполни карточку: товар, цена, описание, ссылка и группы получателей.</p>
 
         <label className="field-label">Название</label>

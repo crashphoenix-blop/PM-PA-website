@@ -72,6 +72,49 @@ export type ProfileUpdatePayload = {
   avatar_url?: string;
 };
 
+export type IngestionRun = {
+  id: number;
+  status: string;
+  triggered_by: string;
+  started_at: string;
+  finished_at: string | null;
+  found_count: number;
+  new_count: number;
+  duplicate_count: number;
+  error_count: number;
+  error_message: string | null;
+};
+
+export type GiftCandidate = {
+  id: number;
+  source_id: number;
+  run_id: number;
+  dedup_key: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image_url: string;
+  store_name: string;
+  store_url: string;
+  status: string;
+  duplicate_reason: string | null;
+  published_gift_id: number | null;
+  created_at: string;
+  reviewed_at: string | null;
+  source_key: string | null;
+  source_name: string | null;
+};
+
+export type GiftCandidateListResponse = {
+  candidates: GiftCandidate[];
+  total: number;
+};
+
+export type IngestionClearResponse = {
+  deleted_candidates: number;
+  deleted_runs: number;
+};
+
 export type AnalyticsEventPayload = {
   event_name: string;
   event_time?: string;

@@ -5,7 +5,11 @@ import type {
   AuthResponse,
   Category,
   Gift,
+  GiftCandidate,
+  GiftCandidateListResponse,
   GiftListResponse,
+  IngestionClearResponse,
+  IngestionRun,
   ProfileUpdatePayload,
   RefreshTokenResponse,
   User
@@ -270,6 +274,58 @@ export const apiClient = {
       path: "/analytics/events",
       method: "POST",
       body: payload
+    });
+  },
+  runGiftIngestion(triggeredBy = "admin") {
+    return request<IngestionRun>({
+      path: "/admin/ingestion/run",
+      method: "POST",
+      body: { triggered_by: triggeredBy }
+    });
+  },
+  getIngestionRuns(limit = 5) {
+    return request<IngestionRun[]>({
+      path: "/admin/ingestion/runs",
+      params: { limit }
+    });
+  },
+  clearIngestionResults() {
+    return request<IngestionClearResponse>({
+      path: "/admin/ingestion/results",
+      method: "DELETE"
+    });
+  },
+  getIngestionCandidates(status?: string, page = 1, perPage = 50) {
+    return request<GiftCandidateListResponse>({
+      path: "/admin/ingestion/candidates",
+      params: { status, page, per_page: perPage }
+    });
+  },
+  getIngestionCandidate(id: number) {
+    return request<GiftCandidate>({
+      path: `/admin/ingestion/candidates/${id}`
+    });
+  },
+  approveGiftCandidate(
+    id: number,
+    payload: {
+      category_ids?: number[];
+      category_names?: string[];
+      name?: string;
+      description?: string;
+      price?: number;
+    }
+  ) {
+    return request<GiftCandidate>({
+      path: `/admin/ingestion/candidates/${id}/approve`,
+      method: "POST",
+      body: payload
+    });
+  },
+  rejectGiftCandidate(id: number) {
+    return request<GiftCandidate>({
+      path: `/admin/ingestion/candidates/${id}/reject`,
+      method: "POST"
     });
   }
 };

@@ -130,9 +130,18 @@ export function ProfileScreen() {
             написать в поддержку
           </button>
           {user?.is_admin ? (
-            <Link href="/admin/gifts/new" className="primary-button" style={{ width: 300, lineHeight: "56px" }}>
-              добавить подарок
-            </Link>
+            <>
+              <Link
+                href="/admin/gifts/candidates"
+                className="primary-button"
+                style={{ width: 300, lineHeight: "56px" }}
+              >
+                парсер и модерация
+              </Link>
+              <Link href="/admin/gifts/new" className="primary-button" style={{ width: 300, lineHeight: "56px" }}>
+                добавить подарок
+              </Link>
+            </>
           ) : null}
         </div>
 
