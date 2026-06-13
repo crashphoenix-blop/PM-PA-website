@@ -123,18 +123,21 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
         <div
           style={{
             position: "fixed",
-            right: 20,
-            bottom: "calc(30px + 60px)",
+            left: 0,
+            right: 0,
+            bottom: "calc(20px + 60px)",
             display: "flex",
             alignItems: "center",
-            gap: 8,
-            zIndex: 30
+            justifyContent: "center",
+            gap: 12,
+            zIndex: 30,
+            paddingInline: 20
           }}
         >
           <button
             type="button"
             className="primary-button"
-            style={{ width: 200 }}
+            style={{ flex: 1, maxWidth: 280 }}
             onClick={() => setConfirmOpen(true)}
           >
             к продавцу
@@ -142,17 +145,30 @@ export function GiftDetailScreen({ giftId }: { giftId: number }) {
           <button
             type="button"
             onClick={() => void onToggleFavorite()}
-            style={{ border: 0, background: "transparent", width: 60, height: 60, cursor: "pointer" }}
+            aria-label={gift.is_favorite ? "Удалить из избранного" : "Добавить в избранное"}
+            style={{
+              border: 0,
+              background: gift.is_favorite ? "var(--app-primary)" : "var(--app-surface-soft)",
+              borderRadius: "50%",
+              width: 55,
+              height: 55,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              transition: "background 0.15s"
+            }}
           >
             <Image
               src="/assets/heart.svg"
-              alt="Избранное"
-              width={32}
-              height={32}
+              alt=""
+              width={26}
+              height={26}
               style={{
                 filter: gift.is_favorite
-                  ? "invert(17%) sepia(96%) saturate(6586%) hue-rotate(356deg) brightness(97%) contrast(121%)"
-                  : "grayscale(0.1) opacity(0.75)"
+                  ? "brightness(0) invert(1)"
+                  : "opacity(0.7)"
               }}
             />
           </button>
