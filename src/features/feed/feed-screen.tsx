@@ -15,7 +15,10 @@ type FeedState = {
 };
 
 const HIDDEN_CATEGORY_NAMES = new Set(["14 февраля", "23 февраля"]);
-const URGENT_MAX_PRICE = 10000;
+
+// 15 конкретных подарков со срочной доставкой (не из начала каталога)
+const URGENT_IDS = new Set([18, 19, 20, 21, 22, 29, 35, 39, 48, 50, 53, 57, 66, 68, 79]);
+
 const URGENT_LABEL = "Срочные";
 const PRICE_FILTER_LABEL = "Цена";
 const PRICE_FILTER_LABEL_ACTIVE = "Цена";
@@ -54,7 +57,7 @@ export function FeedScreen() {
     const category = selectedCategoryIndex > 0 ? visibleCategories[selectedCategoryIndex - 1] : null;
 
     return allGifts.filter((gift) => {
-      if (urgent && gift.price > URGENT_MAX_PRICE) return false;
+      if (urgent && !URGENT_IDS.has(gift.id)) return false;
       const categoryMatched = !category || gift.categories.some((entry) => entry.id === category.id);
       if (!categoryMatched) return false;
       if (gift.price < minPrice || gift.price > maxPrice) return false;
