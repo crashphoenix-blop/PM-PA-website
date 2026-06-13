@@ -121,8 +121,15 @@ input {
   font-size: 1.05rem;
 }
 
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .search-input {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   min-height: 47px;
   border-radius: 12px;
   border: none;
@@ -131,6 +138,19 @@ input {
   color: var(--app-primary);
   background: var(--app-white);
   font-size: clamp(1rem, 0.35vw + 0.9rem, 1.125rem);
+}
+
+.search-filter-btn {
+  flex-shrink: 0;
+  width: 47px;
+  height: 47px;
+  border-radius: 12px;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
 }
 
 .tabbar-shell {

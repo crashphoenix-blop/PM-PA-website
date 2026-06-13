@@ -215,13 +215,34 @@ export function FeedScreen() {
           Привет, <span className="miama">{greetingsName}</span>
         </h1>
 
-        <input
-          className="search-input"
-          value={searchQuery}
-          onChange={(event) => void onSearch(event.target.value)}
-          placeholder="что я хочу..."
-          aria-label="Поиск подарков"
-        />
+        <div className="search-row">
+          <input
+            className="search-input"
+            value={searchQuery}
+            onChange={(event) => void onSearch(event.target.value)}
+            placeholder="что я хочу..."
+            aria-label="Поиск подарков"
+          />
+          <button
+            type="button"
+            className="search-filter-btn"
+            onClick={onTogglePriceFilter}
+            aria-label="Фильтр по цене"
+            style={{
+              background: isPriceFiltered ? "var(--app-primary)" : "var(--app-white)",
+              color: isPriceFiltered ? "var(--app-white)" : "var(--app-primary)"
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="2" y1="5" x2="16" y2="5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              <line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              <line x1="2" y1="13" x2="16" y2="13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              <circle cx="6" cy="5" r="2" fill="var(--app-background)" stroke="currentColor" strokeWidth="1.6"/>
+              <circle cx="12" cy="9" r="2" fill="var(--app-background)" stroke="currentColor" strokeWidth="1.6"/>
+              <circle cx="7" cy="13" r="2" fill="var(--app-background)" stroke="currentColor" strokeWidth="1.6"/>
+            </svg>
+          </button>
+        </div>
 
         <div className="category-row">
           {/* Срочные — виртуальная категория */}
@@ -249,16 +270,6 @@ export function FeedScreen() {
               {title}
             </button>
           ))}
-
-          {/* Фильтр по цене */}
-          <button
-            type="button"
-            className="category-chip"
-            style={{ background: (priceOpen || isPriceFiltered) ? "var(--app-primary)" : "var(--app-secondary)" }}
-            onClick={onTogglePriceFilter}
-          >
-            {priceOpen && isPriceFiltered ? PRICE_FILTER_LABEL_ACTIVE : PRICE_FILTER_LABEL}
-          </button>
         </div>
 
         {/* Панель фильтра по цене */}
