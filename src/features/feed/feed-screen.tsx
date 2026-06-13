@@ -16,9 +16,9 @@ type FeedState = {
 
 const HIDDEN_CATEGORY_NAMES = new Set(["14 февраля", "23 февраля"]);
 const URGENT_MAX_PRICE = 10000;
-const URGENT_LABEL = "Срочные ⚡";
-const PRICE_FILTER_LABEL = "Цена 🔽";
-const PRICE_FILTER_LABEL_ACTIVE = "Цена ✕";
+const URGENT_LABEL = "Срочные";
+const PRICE_FILTER_LABEL = "Цена";
+const PRICE_FILTER_LABEL_ACTIVE = "Цена";
 
 export function FeedScreen() {
   const router = useRouter();
