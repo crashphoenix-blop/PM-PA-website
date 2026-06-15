@@ -17,7 +17,12 @@ const QUESTIONS = [
   {
     id: "occasion" as const,
     label: "Какой повод?",
-    options: ["день рождения", "годовщина", "новый год", "срочно", "просто так"],
+    options: ["день рождения", "годовщина", "новый год", "просто так"],
+  },
+  {
+    id: "is_urgent" as const,
+    label: "Нужен ли подарок срочно?",
+    options: ["да", "нет"],
   },
   {
     id: "budget" as const,
@@ -29,6 +34,16 @@ const QUESTIONS = [
       "10 000–20 000 ₽",
       "20 000 ₽ и выше",
     ],
+  },
+  {
+    id: "age_group" as const,
+    label: "Возраст получателя?",
+    options: ["до 18 лет", "18–30 лет", "30–50 лет", "старше 50 лет"],
+  },
+  {
+    id: "interests" as const,
+    label: "Интересы получателя?",
+    options: ["красота и уход", "дом и уют", "спорт и активность", "технологии", "творчество", "еда и напитки"],
   },
   {
     id: "style" as const,
@@ -46,6 +61,7 @@ export function AIAssistantScreen() {
   const [answers, setAnswers] = useState<Answers>({});
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<Gift[] | null>(null);
+  const [budgetExpanded, setBudgetExpanded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const allAnswered = QUESTIONS.every((q) => answers[q.id]);
@@ -64,8 +80,12 @@ export function AIAssistantScreen() {
         occasion: answers.occasion!,
         budget: answers.budget!,
         style: answers.style!,
+        is_urgent: answers.is_urgent === "да",
+        age_group: answers.age_group ?? "",
+        interests: answers.interests ?? "",
       });
       setResults(res.gifts);
+      setBudgetExpanded(res.budget_expanded ?? false);
     } catch {
       setError("Не удалось получить рекомендации. Попробуй ещё раз.");
     } finally {
@@ -77,6 +97,7 @@ export function AIAssistantScreen() {
     setResults(null);
     setAnswers({});
     setError(null);
+    setBudgetExpanded(false);
   };
 
   const onToggleFavorite = async (giftId: number) => {
@@ -108,9 +129,17 @@ export function AIAssistantScreen() {
             </p>
           </div>
 
+          {budgetExpanded && (
+            <div className="ai-budget-note">
+              В выбранном бюджете мало вариантов — показываем похожие подарки из других ценовых категорий
+            </div>
+          )}
+
           {results.length === 0 ? (
             <div className="state-banner">
-              <p className="state-banner-text">Ничего не нашли под такой бюджет. Попробуй другие параметры.</p>
+              <p className="state-banner-text">
+                К сожалению на данный бюджет ничего не нашлось, возможно загляните в другие категории?
+              </p>
               <button type="button" className="primary-button state-banner-action" onClick={reset}>
                 попробовать ещё раз
               </button>

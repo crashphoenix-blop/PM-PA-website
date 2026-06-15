@@ -244,6 +244,23 @@ export function FeedScreen() {
           </button>
         </div>
 
+        {/* ИИ-помощник — баннер над фильтрами */}
+        <button type="button" className="ai-feed-banner" onClick={() => router.push("/ai")}>
+          <div className="ai-feed-banner-icon">
+            <svg width="20" height="20" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.5 1.5 L15.1 11.9 L13.5 25.5 L11.9 11.9 Z" fill="#524141"/>
+              <path d="M25.5 13.5 L15.1 15.1 L1.5 13.5 L15.1 11.9 Z" fill="#524141"/>
+              <path d="M21.6 5.4 L14.9 12.8 L5.4 21.6 L12.1 14.2 Z" fill="#524141" opacity="0.55"/>
+              <path d="M5.4 5.4 L12.8 12.1 L21.6 21.6 L14.2 14.9 Z" fill="#524141" opacity="0.55"/>
+            </svg>
+          </div>
+          <div className="ai-feed-banner-text">
+            <p className="ai-feed-banner-title">Не можешь выбрать?</p>
+            <p className="ai-feed-banner-subtitle">ИИ-помощник подберёт за 1 минуту</p>
+          </div>
+          <span className="ai-feed-banner-arrow">›</span>
+        </button>
+
         <div className="category-row">
           {/* Срочные — виртуальная категория */}
           <button

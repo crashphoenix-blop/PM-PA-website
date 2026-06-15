@@ -333,8 +333,11 @@ export const apiClient = {
     occasion: string;
     budget: string;
     style: string;
+    is_urgent: boolean;
+    age_group: string;
+    interests: string;
   }) {
-    return request<{ gifts: Gift[] }>({
+    return request<{ gifts: Gift[]; budget_expanded: boolean }>({
       path: "/ai/recommend",
       method: "POST",
       body: payload,

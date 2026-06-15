@@ -793,6 +793,65 @@ input {
   margin: 4px 0 0;
 }
 
+.ai-budget-note {
+  background: var(--app-white);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--app-secondary);
+  margin: 12px 0 0;
+}
+
+.ai-feed-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--app-white);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin: 10px 0 4px;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ai-feed-banner-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--app-surface-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ai-feed-banner-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-feed-banner-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-primary);
+  margin: 0;
+}
+
+.ai-feed-banner-subtitle {
+  font-size: 12px;
+  color: var(--app-secondary);
+  margin: 2px 0 0;
+}
+
+.ai-feed-banner-arrow {
+  font-size: 20px;
+  color: var(--app-secondary);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
 @media (min-width: 900px) {
   .page {
     padding-inline: 24px;
