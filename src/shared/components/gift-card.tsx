@@ -73,10 +73,16 @@ export function GiftCard({ gift, onOpen, onToggleFavorite }: GiftCardProps) {
           }}
         />
       </button>
-      <div className="gift-meta">
-        <p className="gift-meta-price">{Math.trunc(gift.price)}₽</p>
-        <p className="gift-meta-title">{gift.name}</p>
-      </div>
+      <button
+        type="button"
+        style={{ all: "unset", display: "block", width: "100%", cursor: "pointer" }}
+        onClick={onOpen}
+      >
+        <div className="gift-meta">
+          <p className="gift-meta-price">{Math.trunc(gift.price)}₽</p>
+          <p className="gift-meta-title">{gift.name}</p>
+        </div>
+      </button>
     </article>
   );
 }

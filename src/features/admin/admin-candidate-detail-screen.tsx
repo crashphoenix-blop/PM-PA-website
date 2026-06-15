@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminGiftsNav } from "@/features/admin/admin-gifts-nav";
 import { useAuth } from "@/features/auth/auth-context";
@@ -31,6 +31,8 @@ export function AdminCandidateDetailScreen({ candidateId }: { candidateId: numbe
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [editedName, setEditedName] = useState("");
+  const [editedDescription, setEditedDescription] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -46,6 +48,8 @@ export function AdminCandidateDetailScreen({ candidateId }: { candidateId: numbe
         ]);
         if (!active) return;
         setCandidate(loadedCandidate);
+        setEditedName(loadedCandidate.name);
+        setEditedDescription(loadedCandidate.description ?? "");
         setCategories(loadedCategories);
       } catch (loadError) {
         if (!active) return;
@@ -59,11 +63,6 @@ export function AdminCandidateDetailScreen({ candidateId }: { candidateId: numbe
     };
   }, [isAdmin, candidateId]);
 
-  const description = candidate?.description ?? "";
-  const collapsedDescription = useMemo(() => {
-    if (description.length < 90) return description;
-    return `${description.slice(0, 90)}... еще`;
-  }, [description]);
 
   if (!isAdmin) {
     return (
@@ -83,7 +82,9 @@ export function AdminCandidateDetailScreen({ candidateId }: { candidateId: numbe
     setError(null);
     try {
       await apiClient.approveGiftCandidate(candidate.id, {
-        category_ids: [...selectedCategoryIds]
+        category_ids: [...selectedCategoryIds],
+        name: editedName.trim() || candidate.name,
+        description: editedDescription.trim() || undefined,
       });
       router.push("/admin/gifts/candidates");
     } catch (approveError) {
@@ -137,35 +138,35 @@ export function AdminCandidateDetailScreen({ candidateId }: { candidateId: numbe
         </div>
 
         <div style={{ padding: "20px 16px 0" }}>
-          <p className="screen-subtitle" style={{ marginBottom: 8 }}>
+          <p className="screen-subtitle" style={{ marginBottom: 12 }}>
             {candidate.store_name} · превью для модерации
           </p>
-          <h1 className="miama page-title" style={{ marginBottom: 8 }}>
-            {candidate.name}
-          </h1>
+
+          <label style={{ display: "block", marginBottom: 4, fontSize: 12, color: "var(--app-secondary)" }}>
+            Название
+          </label>
+          <input
+            className="search-input"
+            value={editedName}
+            onChange={(e) => setEditedName(e.target.value)}
+            style={{ width: "100%", marginBottom: 12 }}
+          />
+
           <p className="gift-meta-price" style={{ fontSize: "1.5rem", marginBottom: 12 }}>
             {Math.trunc(candidate.price)}₽
           </p>
-          {description ? (
-            <p className="screen-subtitle" style={{ marginBottom: 16 }}>
-              {expanded ? description : collapsedDescription}
-              {description.length >= 90 ? (
-                <button
-                  type="button"
-                  onClick={() => setExpanded((value) => !value)}
-                  style={{
-                    border: 0,
-                    background: "transparent",
-                    color: "var(--app-primary)",
-                    cursor: "pointer",
-                    marginLeft: 6
-                  }}
-                >
-                  {expanded ? "свернуть" : ""}
-                </button>
-              ) : null}
-            </p>
-          ) : null}
+
+          <label style={{ display: "block", marginBottom: 4, fontSize: 12, color: "var(--app-secondary)" }}>
+            Описание
+          </label>
+          <textarea
+            className="search-input"
+            value={editedDescription}
+            onChange={(e) => setEditedDescription(e.target.value)}
+            rows={4}
+            style={{ width: "100%", resize: "vertical", marginBottom: 16, lineHeight: 1.4 }}
+          />
+
           <a
             href={candidate.store_url}
             target="_blank"
