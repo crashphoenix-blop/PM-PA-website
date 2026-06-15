@@ -15,6 +15,7 @@ type FeedState = {
 };
 
 const HIDDEN_CATEGORY_NAMES = new Set(["14 февраля", "23 февраля"]);
+const SEARCH_DEBOUNCE_MS = 300;
 
 // 15 конкретных подарков со срочной доставкой (не из начала каталога)
 const URGENT_IDS = new Set([18, 19, 20, 21, 22, 29, 35, 39, 48, 50, 53, 57, 66, 68, 79]);
@@ -30,8 +31,10 @@ export function FeedScreen() {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [urgentOnly, setUrgentOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Price filter
   const [priceOpen, setPriceOpen] = useState(false);
@@ -147,7 +150,28 @@ export function FeedScreen() {
 
   const onSearch = (query: string) => {
     setSearchQuery(query);
-    refilter({ query });
+
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+
+    if (!query.trim()) {
+      refilter({ query: "" });
+      return;
+    }
+
+    searchTimerRef.current = setTimeout(() => {
+      void (async () => {
+        try {
+          setSearchLoading(true);
+          const result = await apiClient.searchGifts(query.trim(), 1, 200);
+          setState((prev) => ({ ...prev, gifts: result.gifts }));
+        } catch {
+          // при ошибке — локальный ILIKE fallback
+          refilter({ query });
+        } finally {
+          setSearchLoading(false);
+        }
+      })();
+    }, SEARCH_DEBOUNCE_MS);
   };
 
   const onTogglePriceFilter = () => {
@@ -354,9 +378,9 @@ export function FeedScreen() {
           </div>
         ) : null}
 
-        {loading ? <p style={{ marginTop: 24 }}>Загрузка...</p> : null}
+        {(loading || searchLoading) ? <p style={{ marginTop: 24 }}>Загрузка...</p> : null}
 
-        {!loading && error ? (
+        {!loading && !searchLoading && error ? (
           <div className="state-banner">
             <h2 className="miama state-banner-title">Ой!</h2>
             <p className="state-banner-text">Нет интернета</p>
@@ -370,7 +394,7 @@ export function FeedScreen() {
           </div>
         ) : null}
 
-        {!loading && !error && state.gifts.length === 0 ? (
+        {!loading && !searchLoading && !error && state.gifts.length === 0 ? (
           <div className="state-banner">
             <h2 className="miama state-banner-title">Упс!</h2>
             <p className="state-banner-text">
@@ -381,7 +405,7 @@ export function FeedScreen() {
           </div>
         ) : null}
 
-        {!loading && !error && state.gifts.length > 0 ? (
+        {!loading && !searchLoading && !error && state.gifts.length > 0 ? (
           <section className="gift-grid" style={{ marginTop: 12 }}>
             {state.gifts.map((gift) => (
               <GiftCard
