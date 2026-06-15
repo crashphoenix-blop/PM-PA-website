@@ -327,5 +327,18 @@ export const apiClient = {
       path: `/admin/ingestion/candidates/${id}/reject`,
       method: "POST"
     });
+  },
+  getAIRecommendations(payload: {
+    recipient: string;
+    occasion: string;
+    budget: string;
+    style: string;
+  }) {
+    return request<{ gifts: Gift[] }>({
+      path: "/ai/recommend",
+      method: "POST",
+      body: payload,
+      withAuth: false
+    });
   }
 };

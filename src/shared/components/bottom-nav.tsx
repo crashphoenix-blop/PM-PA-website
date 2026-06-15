@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 const items = [
   { href: "/feed", icon: "/assets/home.svg", label: "Лента" },
   { href: "/favorites", icon: "/assets/heart-nav.svg", label: "Избранное" },
+  { href: "/ai", icon: "/assets/ai-spark.svg", label: "ИИ" },
   { href: "/profile", icon: "/assets/profile.svg", label: "Профиль" }
 ];
 

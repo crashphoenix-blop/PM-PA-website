@@ -159,12 +159,12 @@ input {
   bottom: 10px;
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 8px;
   z-index: 20;
 }
 
 .tabbar-button {
-  width: clamp(96px, 10vw, 110px);
+  width: clamp(78px, 9vw, 110px);
   height: 59px;
   border-radius: var(--radius-tab);
   border: 0;
@@ -671,6 +671,126 @@ input {
   color: var(--app-primary);
   margin: 0;
   white-space: pre-line;
+}
+
+/* ── AI assistant ───────────────────────────────────────────── */
+.ai-page {
+  padding-bottom: 120px;
+}
+
+.ai-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ai-hero-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--app-surface-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ai-hero-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--app-primary);
+  margin: 0 0 4px;
+}
+
+.ai-hero-subtitle {
+  font-size: 14px;
+  color: var(--app-primary);
+  opacity: 0.7;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.ai-card {
+  background: var(--app-white);
+  border-radius: 24px;
+  padding: 20px 20px 16px;
+  margin-bottom: 12px;
+}
+
+.ai-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--app-text-main);
+  margin: 0 0 14px;
+}
+
+.ai-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-chip {
+  border: 0;
+  border-radius: 24px;
+  padding: 9px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  background: #f0ece8;
+  color: var(--app-primary);
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.2;
+}
+
+.ai-chip--active {
+  background: var(--app-primary);
+  color: var(--app-white);
+}
+
+.ai-submit-wrap {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.ai-submit-btn {
+  width: 100%;
+  max-width: 360px;
+  opacity: 1;
+  transition: opacity 0.15s;
+}
+
+.ai-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ai-error {
+  color: crimson;
+  font-size: 14px;
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+.ai-results-header {
+  margin-bottom: 4px;
+}
+
+.ai-back-btn {
+  border: 0;
+  background: transparent;
+  color: var(--app-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 4px;
+}
+
+.ai-results-subtitle {
+  font-size: 13px;
+  color: var(--app-secondary);
+  margin: 4px 0 0;
 }
 
 @media (min-width: 900px) {
